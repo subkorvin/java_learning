@@ -3,7 +3,8 @@ package ru.qa.rtsoft;
 public class MyFirstProgram {
 
   public static void main(String[] args) {
-    System.out.println("Hello, World!");
+    String somebody = "World";
+    System.out.println("Hello, " + somebody + " !");
 
     int l = 9;
     int s = l * l;
