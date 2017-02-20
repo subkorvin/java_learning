@@ -1,4 +1,4 @@
-package ru.qa.rtsoft.addressbook;
+package ru.qa.rtsoft.addressbook.model;
 
 public class UserData {
   private final String first_name;
