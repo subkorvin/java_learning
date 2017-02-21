@@ -34,4 +34,7 @@ public class UserHelper extends HelperBase{
   public void initNewUserCreation() {
     click(By.linkText("add new"));
   }
+
+  public void selectUser() {
+  }
 }
