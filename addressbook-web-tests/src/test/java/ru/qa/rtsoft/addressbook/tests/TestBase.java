@@ -21,7 +21,10 @@ public class TestBase {
     app.stop();
   }
 
+<<<<<<< HEAD
   public ApplicationManager getApp() {
     return app;
   }
+=======
+>>>>>>> origin/master
 }
