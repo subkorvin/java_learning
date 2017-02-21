@@ -36,5 +36,22 @@ public class UserHelper extends HelperBase{
   }
 
   public void selectUser() {
+    click(By.id("14"));
+  }
+
+  public void initUserModification() {
+    click(By.xpath("//table[@id='maintable']/tbody/tr[2]/td[8]/a/img"));
+  }
+
+  public void submitUserModification() {
+    click(By.name("update"));
+  }
+
+  public void initUserDeleting() {
+    click(By.xpath("//div[@id='content']/form[2]/div[2]/input"));
+  }
+
+  public void confirmationUserDeleting() {
+    confirm();
   }
 }

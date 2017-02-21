@@ -1,5 +1,6 @@
 package ru.qa.rtsoft.addressbook.appmanager;
 
+import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoAlertPresentException;
 import org.openqa.selenium.firefox.FirefoxDriver;
@@ -23,6 +24,10 @@ public class HelperBase {
     wd.findElement(locator).clear();
     wd.findElement(locator).sendKeys(text);
   }
+
+  protected void confirm(){
+    wd.switchTo().alert().accept();
+    }
 
   public boolean isAlertPresent() {
     try {
