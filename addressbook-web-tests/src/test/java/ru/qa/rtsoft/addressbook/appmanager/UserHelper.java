@@ -36,7 +36,7 @@ public class UserHelper extends HelperBase{
   }
 
   public void selectUser() {
-    click(By.id("14"));
+    click(By.xpath("//div/div[4]/form[2]/table/tbody/tr[2]/td[1]/input"));
   }
 
   public void initUserModification() {
