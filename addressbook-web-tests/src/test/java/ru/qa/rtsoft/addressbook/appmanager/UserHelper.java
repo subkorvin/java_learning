@@ -1,6 +1,7 @@
 package ru.qa.rtsoft.addressbook.appmanager;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import ru.qa.rtsoft.addressbook.model.UserData;
 
@@ -9,7 +10,7 @@ import ru.qa.rtsoft.addressbook.model.UserData;
  */
 public class UserHelper extends HelperBase{
 
-  public UserHelper(FirefoxDriver wd) {
+  public UserHelper(WebDriver wd) {
 
     super(wd);
   }
