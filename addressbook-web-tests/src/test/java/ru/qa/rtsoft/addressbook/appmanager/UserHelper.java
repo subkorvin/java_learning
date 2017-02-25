@@ -80,4 +80,10 @@ public class UserHelper extends HelperBase{
     initUserDeleting();
     confirmationUserDeleting();
   }
+
+  public void modifyUser(UserData user, boolean b) {
+    initUserModification();
+    fillUserFormFields(user, b);
+    submitUserModification();
+    }
 }

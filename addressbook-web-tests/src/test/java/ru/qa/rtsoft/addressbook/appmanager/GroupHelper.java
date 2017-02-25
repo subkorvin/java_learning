@@ -65,4 +65,12 @@ public class GroupHelper extends HelperBase {
     deleteSelectedGroups();
     returnToGroupPage();
   }
+
+  public void modifyGroup(GroupData group) {
+    selectGroup();
+    initGroupModification();
+    fillGroupForm(new GroupData("Test", "Test2", "Test3"));
+    submitGroupModification();
+    returnToGroupPage();
+  }
 }
