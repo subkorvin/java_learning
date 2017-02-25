@@ -6,6 +6,8 @@ import org.openqa.selenium.NoAlertPresentException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
+import java.util.Objects;
+
 /**
  * Created by korvin on 21.02.2017.
  */
@@ -22,8 +24,13 @@ public class HelperBase {
 
   protected void type(By locator, String text) {
     click(locator);
-    wd.findElement(locator).clear();
-    wd.findElement(locator).sendKeys(text);
+    if (text != null) {
+      String existingText = wd.findElement(locator).getAttribute("value");
+      if (! Objects.equals(text, existingText)) {
+        wd.findElement(locator).clear();
+        wd.findElement(locator).sendKeys(text);
+      }
+    }
   }
 
   protected void confirm(){
