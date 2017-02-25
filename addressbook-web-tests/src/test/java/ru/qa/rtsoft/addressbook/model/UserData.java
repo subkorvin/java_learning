@@ -11,8 +11,9 @@ public class UserData {
   private final String cell_phone;
   private final String work_phone;
   private final String email;
+  private String group;
 
-  public UserData(String first_name, String middle_name, String family_name, String nickname, String company, String address, String home_phone, String cell_phone, String work_phone, String email) {
+  public UserData(String first_name, String middle_name, String family_name, String nickname, String company, String address, String home_phone, String cell_phone, String work_phone, String email, String group) {
     this.first_name = first_name;
     this.middle_name = middle_name;
     this.family_name = family_name;
@@ -23,6 +24,7 @@ public class UserData {
     this.cell_phone = cell_phone;
     this.work_phone = work_phone;
     this.email = email;
+    this.group = group;
   }
 
   public String getFirst_name() {
@@ -63,5 +65,9 @@ public class UserData {
 
   public String getEmail() {
     return email;
+  }
+
+  public String getGroup() {
+    return group;
   }
 }

@@ -1,8 +1,11 @@
 package ru.qa.rtsoft.addressbook.appmanager;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.support.ui.Select;
+import org.testng.Assert;
 import ru.qa.rtsoft.addressbook.model.UserData;
 
 /**
@@ -19,7 +22,7 @@ public class UserHelper extends HelperBase{
     click(By.name("submit"));
   }
 
-  public void fillNewUserFormFields(UserData userData) {
+  public void fillUserFormFields(UserData userData, boolean creation) {
     type((By.name("firstname")), userData.getFirst_name());
     type((By.name("middlename")), userData.getMiddle_name());
     type((By.name("lastname")), userData.getFamily_name());
@@ -30,6 +33,12 @@ public class UserHelper extends HelperBase{
     type((By.name("mobile")), userData.getCell_phone());
     type((By.name("work")), userData.getWork_phone());
     type((By.name("email")), userData.getEmail());
+
+    if (creation) {
+      new Select(wd.findElement(By.name("new_group"))).selectByVisibleText(userData.getGroup());
+    } else {
+      Assert.assertFalse (isElementPresent (By.name("new_group")));
+    }
   }
 
   public void initNewUserCreation() {
