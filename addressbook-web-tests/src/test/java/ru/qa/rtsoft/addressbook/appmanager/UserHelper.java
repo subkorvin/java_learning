@@ -64,4 +64,20 @@ public class UserHelper extends HelperBase{
   public void confirmationUserDeleting() {
     confirm();
   }
+
+  public void createUser(UserData user, boolean b) {
+    initNewUserCreation();
+    fillUserFormFields(user, b);
+    submitNewUserCreation();
+  }
+
+  public boolean isThereAUser() {
+    return isElementPresent(By.xpath("//div/div[4]/form[2]/table/tbody/tr[2]/td[1]/input"));
+  }
+
+  public void deleteUser() {
+    selectUser();
+    initUserDeleting();
+    confirmationUserDeleting();
+  }
 }
