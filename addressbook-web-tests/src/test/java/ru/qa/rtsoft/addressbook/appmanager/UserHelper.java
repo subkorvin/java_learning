@@ -1,12 +1,11 @@
 package ru.qa.rtsoft.addressbook.appmanager;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
 import ru.qa.rtsoft.addressbook.model.UserData;
+import ru.qa.rtsoft.addressbook.tests.TestBase;
 
 /**
  * Created by korvin on 20.02.2017.
@@ -65,10 +64,11 @@ public class UserHelper extends HelperBase{
     confirm();
   }
 
-  public void createUser(UserData user, boolean b) {
+  public void createUser(UserData user) {
     initNewUserCreation();
-    fillUserFormFields(user, b);
+    fillUserFormFields(user, true);
     submitNewUserCreation();
+    TestBase.getApp().getNavigationHelper().returnToHomePage();
   }
 
   public boolean isThereAUser() {
@@ -81,9 +81,10 @@ public class UserHelper extends HelperBase{
     confirmationUserDeleting();
   }
 
-  public void modifyUser(UserData user, boolean b) {
+  public void modifyUser(UserData user) {
     initUserModification();
-    fillUserFormFields(user, b);
+    fillUserFormFields(user, false);
     submitUserModification();
+    TestBase.getApp().getNavigationHelper().returnToHomePage();
     }
 }

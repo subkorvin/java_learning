@@ -10,10 +10,11 @@ import ru.qa.rtsoft.addressbook.appmanager.ApplicationManager;
  */
 public class TestBase {
 
-  protected final ApplicationManager app = new ApplicationManager(BrowserType.CHROME);
+  protected static ApplicationManager app;
 
   @BeforeMethod
   public void setUp() throws Exception {
+    app = new ApplicationManager(BrowserType.CHROME);
     app.init();
   }
 
@@ -23,7 +24,7 @@ public class TestBase {
   }
 
 
-  public ApplicationManager getApp() {
+  public static ApplicationManager getApp() {
     return app;
   }
 }
