@@ -14,7 +14,7 @@ public class TestBase {
 
   @BeforeMethod
   public void setUp() throws Exception {
-    app = new ApplicationManager(BrowserType.CHROME);
+    app = new ApplicationManager(BrowserType.FIREFOX);
     app.init();
   }
 
