@@ -11,23 +11,19 @@ public class UserDeletingTests extends TestBase {
 
   @Test
   public void testUserDeleting() {
-    if (!app.getUserHelper().isThereAUser()) {
-      app.getNavigationHelper().gotoGroupPage();
-      if (!app.getGroupHelper().isThereAGroup()) {
-        app.getGroupHelper().createGroup(new GroupData("Test1", "Test2", "Test3"));
-        app.getUserHelper().createUser(new UserData("Vasya", "Yu", "Pupkin", "VasyaPro", "NIICHAVO", "Moscow, Leninsky tupik, 13", "+7 435 1234567", "+7 916 1234567", "+7 495 1234567", "vasya@pupkin.ru", "Test1"));
-        app.getUserHelper().deleteUser();
-        app.getNavigationHelper().gotoGroupPage();
-        app.getGroupHelper().deleteGroup();
-        app.getNavigationHelper().returnToHomePage();
-      } else {
-        app.getUserHelper().createUser(new UserData("Vasya", "Yu", "Pupkin", "VasyaPro", "NIICHAVO", "Moscow, Leninsky tupik, 13", "+7 435 1234567", "+7 916 1234567", "+7 495 1234567", "vasya@pupkin.ru", "Test1"));
-        app.getUserHelper().deleteUser();
-        app.getNavigationHelper().returnToHomePage();
-      }
-    } else {
+    if (app.getUserHelper().isThereAUser()) {
       app.getUserHelper().deleteUser();
+    } else if (app.getGroupHelper().isThereAGroup()) {
+      app.getNavigationHelper().gotoGroupPage();
+      app.getGroupHelper().createGroup(new GroupData("Test1", "Test2", "Test3"));
+      app.getUserHelper().createUser(new UserData("Vasya", "Yu", "Pupkin", "VasyaPro", "NIICHAVO", "Moscow, Leninsky tupik, 13", "+7 435 1234567", "+7 916 1234567", "+7 495 1234567", "vasya@pupkin.ru", "Test1"));
+      app.getUserHelper().deleteUser();
+      app.getNavigationHelper().gotoGroupPage();
+      app.getGroupHelper().deleteGroup();
       app.getNavigationHelper().returnToHomePage();
+    } else {
+      app.getUserHelper().createUser(new UserData("Vasya", "Yu", "Pupkin", "VasyaPro", "NIICHAVO", "Moscow, Leninsky tupik, 13", "+7 435 1234567", "+7 916 1234567", "+7 495 1234567", "vasya@pupkin.ru", "Test1"));
+      app.getUserHelper().deleteUser();
     }
   }
 }
