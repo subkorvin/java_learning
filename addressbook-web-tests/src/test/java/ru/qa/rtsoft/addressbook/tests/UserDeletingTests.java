@@ -13,6 +13,7 @@ public class UserDeletingTests extends TestBase {
   public void testUserDeleting() {
     if (app.getUserHelper().isThereAUser()) {
       app.getUserHelper().deleteUser();
+      app.getNavigationHelper().returnToHomePage();
       return;
     }
     app.getNavigationHelper().gotoGroupPage();
