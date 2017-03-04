@@ -2,7 +2,6 @@ package ru.qa.rtsoft.addressbook.appmanager;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.firefox.FirefoxDriver;
 import ru.qa.rtsoft.addressbook.model.GroupData;
 
 /**
@@ -59,16 +58,20 @@ public class GroupHelper extends HelperBase {
     return isElementPresent(By.name("selected[]"));
   }
 
-  public void deleteGroup() {
-    selectGroup();
+  public void deleteGroup(int index) {
+    selectGroup(index);
     deleteSelectedGroups();
     returnToGroupPage();
   }
 
-  public void modifyGroup(GroupData group) {
-    selectGroup();
+  private void selectGroup(int index) {
+    wd.findElements(By.name("selected[]")).get(index).click();
+  }
+
+  public void modifyGroup(GroupData group, int index) {
+    selectGroup(index);
     initGroupModification();
-    fillGroupForm(new GroupData("Test", "Test2", "Test3"));
+    fillGroupForm(group);
     submitGroupModification();
     returnToGroupPage();
   }

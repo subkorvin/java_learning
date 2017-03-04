@@ -16,7 +16,7 @@ public class GroupModificationTests extends TestBase {
     if (! app.getGroupHelper().isThereAGroup()) {
       app.getGroupHelper().createGroup(new GroupData("Test1", "Test2", "Test3"));
     }
-    app.getGroupHelper().modifyGroup(new GroupData("Test", "Test2", "Test3"));
+    app.getGroupHelper().modifyGroup(new GroupData("Test2", "Test3", "Test4"), before - 1);
     int after = app.getGroupHelper().getGroupCount();
     Assert.assertEquals(after, before);
   }

@@ -10,7 +10,7 @@ public class GroupCreationTests extends TestBase {
   public void testGroupCreation() {
     app.getNavigationHelper().gotoGroupPage();
     int before = app.getGroupHelper().getGroupCount();
-    app.getGroupHelper().createGroup(new GroupData("Test1", "Test2", "Test3"));
+    app.getGroupHelper().createGroup(new GroupData("xrwer23", "Test4", "Test5"));
     int after = app.getGroupHelper().getGroupCount();
     Assert.assertEquals(after, before + 1);
   }
