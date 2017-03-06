@@ -1,6 +1,7 @@
 package ru.qa.rtsoft.addressbook.model;
 
 public class UserData {
+
   private final String first_name;
   private final String middle_name;
   private final String family_name;
@@ -69,5 +70,31 @@ public class UserData {
 
   public String getGroup() {
     return group;
+  }
+
+  @Override
+  public String toString() {
+    return "UserData{" +
+            "first_name='" + first_name + '\'' +
+            ", family_name='" + family_name + '\'' +
+            '}';
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) return true;
+    if (o == null || getClass() != o.getClass()) return false;
+
+    UserData userData = (UserData) o;
+
+    if (first_name != null ? !first_name.equals(userData.first_name) : userData.first_name != null) return false;
+    return family_name != null ? family_name.equals(userData.family_name) : userData.family_name == null;
+  }
+
+  @Override
+  public int hashCode() {
+    int result = first_name != null ? first_name.hashCode() : 0;
+    result = 31 * result + (family_name != null ? family_name.hashCode() : 0);
+    return result;
   }
 }

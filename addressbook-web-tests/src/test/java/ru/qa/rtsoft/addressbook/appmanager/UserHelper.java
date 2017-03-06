@@ -2,15 +2,19 @@ package ru.qa.rtsoft.addressbook.appmanager;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
 import ru.qa.rtsoft.addressbook.model.UserData;
 import ru.qa.rtsoft.addressbook.tests.TestBase;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by korvin on 20.02.2017.
  */
-public class UserHelper extends HelperBase{
+public class UserHelper extends HelperBase {
 
   public UserHelper(WebDriver wd) {
 
@@ -36,7 +40,7 @@ public class UserHelper extends HelperBase{
     if (creation) {
       new Select(wd.findElement(By.name("new_group"))).selectByVisibleText(userData.getGroup());
     } else {
-      Assert.assertFalse (isElementPresent (By.name("new_group")));
+      Assert.assertFalse(isElementPresent(By.name("new_group")));
     }
   }
 
@@ -86,5 +90,17 @@ public class UserHelper extends HelperBase{
     fillUserFormFields(user, false);
     submitUserModification();
     TestBase.getApp().getNavigationHelper().returnToHomePage();
+  }
+
+  public List<UserData> getUsersList() {
+    List<UserData> users = new ArrayList<UserData>();
+    List<WebElement> elements = wd.findElements(By.name("entry"));
+    for (WebElement element : elements) {
+      String first_name = element.findElement(By.xpath(".//td[3]")).getText();
+      String last_name = element.findElement(By.xpath(".//td[2]")).getText();
+      UserData user = new UserData(first_name, null, last_name, null, null, null, null, null, null, null, null);
+      users.add(user);
     }
+    return users;
+  }
 }
