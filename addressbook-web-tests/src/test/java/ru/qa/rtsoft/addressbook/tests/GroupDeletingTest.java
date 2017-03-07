@@ -15,7 +15,7 @@ public class GroupDeletingTest extends TestBase {
       app.getGroupHelper().createGroup(new GroupData("Test1", "Test2", "Test3"));
     }
     List<GroupData> before = app.getGroupHelper().getGroupList();
-    app.getGroupHelper().deleteGroup(before.size() - 1);
+    app.getGroupHelper().deleteGroup(before.size() - 1); //  второй параметр - выбор удаляемой группы, передается в метод deleteGroup и оттуда - в selectGroup
     List<GroupData> after = app.getGroupHelper().getGroupList();
     Assert.assertEquals(after.size(), before.size() - 1);
 

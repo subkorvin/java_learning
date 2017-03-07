@@ -19,7 +19,7 @@ public class GroupModificationTests extends TestBase {
     }
     List<GroupData> before = app.getGroupHelper().getGroupList();
     GroupData group = new GroupData(before.get(before.size() - 1).getId(), "Test2", "Test3", "Test4");
-    app.getGroupHelper().modifyGroup(group, before.size() - 1);
+    app.getGroupHelper().modifyGroup(group, before.size() - 1); // второй параметр - выбор модифицируемой группы, передается в метод modifyGroup и оттуда - в selectGroup
     List<GroupData> after = app.getGroupHelper().getGroupList();
     Assert.assertEquals(after.size(), before.size());
 
