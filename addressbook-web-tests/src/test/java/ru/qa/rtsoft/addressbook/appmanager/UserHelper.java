@@ -49,7 +49,7 @@ public class UserHelper extends HelperBase {
   }
 
   public void selectUser(int index) {
-    wd.findElements(By.xpath("//div/div[4]/form[2]/table/tbody/tr[2]/td[1]/input")).get(index).click();
+    wd.findElements(By.name("selected[]")).get(index).click();
   }
 
   public void initUserModification() {
@@ -83,6 +83,7 @@ public class UserHelper extends HelperBase {
     selectUser(index);
     initUserDeleting();
     confirmationUserDeleting();
+    TestBase.getApp().getNavigationHelper().returnToHomePage();
   }
 
   public void modifyUser(UserData user) {

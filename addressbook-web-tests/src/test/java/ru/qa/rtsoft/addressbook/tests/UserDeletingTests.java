@@ -4,7 +4,6 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 import ru.qa.rtsoft.addressbook.model.GroupData;
 import ru.qa.rtsoft.addressbook.model.UserData;
-
 import java.util.List;
 
 /**
@@ -17,7 +16,6 @@ public class UserDeletingTests extends TestBase {
     if (app.getUserHelper().isThereAUser()) {
       List<UserData> before = app.getUserHelper().getUsersList();
       app.getUserHelper().deleteUser(before.size() - 1);
-      app.getNavigationHelper().returnToHomePage();
       List<UserData> after = app.getUserHelper().getUsersList();
       Assert.assertEquals(after.size(), before.size() - 1); //сравнение размеров списков до и после удаления
 
@@ -33,7 +31,6 @@ public class UserDeletingTests extends TestBase {
       app.getUserHelper().deleteUser(before.size() - 1);
 //      app.getNavigationHelper().gotoGroupPage();
 //      app.getGroupHelper().deleteGroup();
-      app.getNavigationHelper().returnToHomePage();
       List<UserData> after = app.getUserHelper().getUsersList();
       Assert.assertEquals(after.size(), before.size() - 1); //сравнение размеров списков до и после удаления
 
@@ -43,7 +40,6 @@ public class UserDeletingTests extends TestBase {
       app.getUserHelper().createUser(new UserData("Vasya", "Yu", "Pupkin", "VasyaPro", "NIICHAVO", "Moscow, Leninsky tupik, 13", "+7 435 1234567", "+7 916 1234567", "+7 495 1234567", "vasya@pupkin.ru", "Test1"));
       List<UserData> before = app.getUserHelper().getUsersList();
       app.getUserHelper().deleteUser(before.size() - 1);
-      app.getNavigationHelper().returnToHomePage();
       List<UserData> after = app.getUserHelper().getUsersList();
       Assert.assertEquals(after.size(), before.size() - 1); //сравнение размеров списков до и после удаления
 
