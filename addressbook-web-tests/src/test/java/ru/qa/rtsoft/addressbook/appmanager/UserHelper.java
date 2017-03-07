@@ -48,8 +48,8 @@ public class UserHelper extends HelperBase {
     click(By.linkText("add new"));
   }
 
-  public void selectUser() {
-    click(By.xpath("//div/div[4]/form[2]/table/tbody/tr[2]/td[1]/input"));
+  public void selectUser(int index) {
+    wd.findElements(By.xpath("//div/div[4]/form[2]/table/tbody/tr[2]/td[1]/input")).get(index).click();
   }
 
   public void initUserModification() {
@@ -79,8 +79,8 @@ public class UserHelper extends HelperBase {
     return isElementPresent(By.xpath("//div/div[4]/form[2]/table/tbody/tr[2]/td[1]/input"));
   }
 
-  public void deleteUser() {
-    selectUser();
+  public void deleteUser(int index) {
+    selectUser(index);
     initUserDeleting();
     confirmationUserDeleting();
   }
