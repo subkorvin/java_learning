@@ -52,8 +52,15 @@ public class UserHelper extends HelperBase {
     wd.findElements(By.name("selected[]")).get(index).click();
   }
 
-  public void initUserModification() {
-    click(By.xpath("//table[@id='maintable']/tbody/tr[2]/td[8]/a/img"));
+  public void initUserModification(int index) {
+    List<WebElement> elements = wd.findElements(By.name("entry"));
+    for (int i = 0; i < elements.size(); i++) {
+      if(i == index) {
+        index += 2;
+        click(By.xpath(".//tr[" + index + "]/td[8]/a/img"));
+        break;
+      }
+    }
   }
 
   public void submitUserModification() {
@@ -86,8 +93,8 @@ public class UserHelper extends HelperBase {
     TestBase.getApp().getNavigationHelper().returnToHomePage();
   }
 
-  public void modifyUser(UserData user) {
-    initUserModification();
+  public void modifyUser(UserData user, int index) {
+    initUserModification(index);
     fillUserFormFields(user, false);
     submitUserModification();
     TestBase.getApp().getNavigationHelper().returnToHomePage();
@@ -99,7 +106,8 @@ public class UserHelper extends HelperBase {
     for (WebElement element : elements) {
       String first_name = element.findElement(By.xpath(".//td[3]")).getText();
       String last_name = element.findElement(By.xpath(".//td[2]")).getText();
-      UserData user = new UserData(first_name, null, last_name, null, null, null, null, null, null, null, null);
+      int id = Integer.parseInt(element.findElement(By.tagName("input")).getAttribute("value"));
+      UserData user = new UserData(id, first_name, null, last_name, null, null, null, null, null, null, null, null);
       users.add(user);
     }
     return users;

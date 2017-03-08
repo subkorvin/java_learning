@@ -2,6 +2,7 @@ package ru.qa.rtsoft.addressbook.model;
 
 public class UserData {
 
+  private int id;
   private final String first_name;
   private final String middle_name;
   private final String family_name;
@@ -14,7 +15,24 @@ public class UserData {
   private final String email;
   private String group;
 
+
+  public UserData(int id, String first_name, String middle_name, String family_name, String nickname, String company, String address, String home_phone, String cell_phone, String work_phone, String email, String group) {
+    this.id = id;
+    this.first_name = first_name;
+    this.middle_name = middle_name;
+    this.family_name = family_name;
+    this.nickname = nickname;
+    this.company = company;
+    this.address = address;
+    this.home_phone = home_phone;
+    this.cell_phone = cell_phone;
+    this.work_phone = work_phone;
+    this.email = email;
+    this.group = group;
+  }
+
   public UserData(String first_name, String middle_name, String family_name, String nickname, String company, String address, String home_phone, String cell_phone, String work_phone, String email, String group) {
+    this.id = Integer.MAX_VALUE;
     this.first_name = first_name;
     this.middle_name = middle_name;
     this.family_name = family_name;
@@ -72,10 +90,15 @@ public class UserData {
     return group;
   }
 
+  public int getId() {
+    return id;
+  }
+
   @Override
   public String toString() {
     return "UserData{" +
-            "first_name='" + first_name + '\'' +
+            "id='" + id + '\'' +
+            ", first_name='" + first_name + '\'' +
             ", family_name='" + family_name + '\'' +
             '}';
   }
