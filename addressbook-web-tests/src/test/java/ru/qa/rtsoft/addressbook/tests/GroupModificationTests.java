@@ -1,6 +1,7 @@
 package ru.qa.rtsoft.addressbook.tests;
 
 import org.testng.Assert;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import ru.qa.rtsoft.addressbook.model.GroupData;
 
@@ -11,12 +12,16 @@ import java.util.*;
  */
 public class GroupModificationTests extends TestBase {
 
-  @Test
-  public void testGroupModification () {
+  @BeforeMethod
+  public void ensurePreconditions() {
     app.getNavigationHelper().gotoGroupPage();
-    if (! app.getGroupHelper().isThereAGroup()) {
+    if (!app.getGroupHelper().isThereAGroup()) {
       app.getGroupHelper().createGroup(new GroupData("Test1", "Test2", "Test3"));
     }
+  }
+
+  @Test
+  public void testGroupModification () {
     List<GroupData> before = app.getGroupHelper().getGroupList();
     GroupData group = new GroupData(before.get(before.size() - 1).getId(), "Test2", "Test3", "Test4");
     app.getGroupHelper().modifyGroup(group, before.size() - 1); // второй параметр - выбор модифицируемой группы, передается в метод modifyGroup и оттуда - в selectGroup
