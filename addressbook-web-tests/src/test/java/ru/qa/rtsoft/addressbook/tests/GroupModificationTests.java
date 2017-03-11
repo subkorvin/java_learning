@@ -22,23 +22,19 @@ public class GroupModificationTests extends TestBase {
 
   @Test
   public void testGroupModification () {
-    List<GroupData> before = app.group().list();
-    int groupNumber = 1; // выбор номера группы в естественном виде (groupNumber == before.size() - 1)
-    groupNumber = groupNumber - 1; // уменьшаем номер на единицу потому что отсчет идет с нуля
+    Set<GroupData> before = app.group().set();
+    GroupData modifiedGroup = before.iterator().next();
     GroupData group = new GroupData()
-            .withId(before.get(groupNumber).getId())
+            .withId(modifiedGroup.getId())
             .withGroupname("Test2")
             .withGroupheader("Test3")
             .withGroupfooter("Test4");
-    app.group().modify(group, groupNumber); // второй параметр - выбор модифицируемой группы, передается в метод modify и оттуда - в selectGroup
-    List<GroupData> after = app.group().list();
+    app.group().modify(group); // второй параметр - выбор модифицируемой группы, передается в метод modify и оттуда - в selectGroup
+    Set<GroupData> after = app.group().set();
     Assert.assertEquals(after.size(), before.size());
 
-    before.remove(groupNumber);
+    before.remove(modifiedGroup);
     before.add(group);
-    Comparator<? super GroupData> byId = (g1, g2) -> Integer.compare(g1.getId(), g2.getId());
-    before.sort(byId);
-    after.sort(byId);
     Assert.assertEquals(before, after);
   }
 }
