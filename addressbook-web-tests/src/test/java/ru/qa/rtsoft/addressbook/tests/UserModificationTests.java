@@ -27,7 +27,18 @@ public class UserModificationTests extends TestBase {
       int userNumber = 5; //номер модифицируемого пользователя в естественном виде
       userNumber = userNumber - 1; // уменьшаем номер на единицу, потому что отсчет идет с нуля
       if (userNumber >= 0 && userNumber < before.size()) {
-        UserData user = new UserData(before.get(userNumber).getId(), "Petya", "A", "Ivanov", "PIvanov", "RTSoft", "Tula, tup. Kommunizma, 13", "+7 815 1234567", "+7 812 1452365", "+7 845 2365486", "p_ivanov@microsoft.com", null);
+        UserData user = new UserData()
+                .withId(before.get(userNumber).getId())
+                .withFirst_name("Vasya")
+                .withMiddle_name("Yu")
+                .withFamily_name("Pupkin")
+                .withNickname("VasyaPro")
+                .withCompany("NIICHAVO")
+                .withAddress("Moscow, Leninsky tupik, 13")
+                .withHome_phone("+7 435 1234567")
+                .withCell_phone("+7 916 1234567")
+                .withWork_phone("+7 495 1234567")
+                .withEmail("vasya@pupkin.ru");
         app.user().modify(user, userNumber);
         List<UserData> after = app.user().list();
         Assert.assertEquals(after.size(), before.size()); //сравнение размеров списков до и после удаления
@@ -51,9 +62,31 @@ public class UserModificationTests extends TestBase {
       */
       if (app.group().list().size() == 0) {
         app.group().create(new GroupData().withGroupname("Test1").withGroupheader("Test2").withGroupfooter("Test3"));
-        app.user().create(new UserData("Vasya", "Yu", "Pupkin", "VasyaPro", "NIICHAVO", "Moscow, Leninsky tupik, 13", "+7 435 1234567", "+7 916 1234567", "+7 495 1234567", "vasya@pupkin.ru", "Test1"));
+        app.user().create(new UserData()
+                .withFirst_name("Vasya")
+                .withMiddle_name("Yu")
+                .withFamily_name("Pupkin")
+                .withNickname("VasyaPro")
+                .withCompany("NIICHAVO")
+                .withAddress("Moscow, Leninsky tupik, 13")
+                .withHome_phone("+7 435 1234567")
+                .withCell_phone("+7 916 1234567")
+                .withWork_phone("+7 495 1234567")
+                .withEmail("vasya@pupkin.ru")
+                .withGroup("Test1"));
         List<UserData> before = app.user().list();
-        UserData user = new UserData(before.get(before.size() - 1).getId(), "Petya", "A", "Ivanov", "PIvanov", "RTSoft", "Tula, tup. Kommunizma, 13", "+7 815 1234567", "+7 812 1452365", "+7 845 2365486", "p_ivanov@microsoft.com", null);
+        UserData user = new UserData()
+                .withId(before.get(before.size() - 1).getId())
+                .withFirst_name("Vasya")
+                .withMiddle_name("Yu")
+                .withFamily_name("Pupkin")
+                .withNickname("VasyaPro")
+                .withCompany("NIICHAVO")
+                .withAddress("Moscow, Leninsky tupik, 13")
+                .withHome_phone("+7 435 1234567")
+                .withCell_phone("+7 916 1234567")
+                .withWork_phone("+7 495 1234567")
+                .withEmail("vasya@pupkin.ru");
         app.user().modify(user, before.size() - 1);
         List<UserData> after = app.user().list();
         Assert.assertEquals(after.size(), before.size()); //сравнение размеров списков до и после удаления
@@ -66,9 +99,31 @@ public class UserModificationTests extends TestBase {
         * группа есть,
         * создаем пользователя и модифицируем его
         */
-        app.user().create(new UserData("Vasya", "Yu", "Pupkin", "VasyaPro", "NIICHAVO", "Moscow, Leninsky tupik, 13", "+7 435 1234567", "+7 916 1234567", "+7 495 1234567", "vasya@pupkin.ru", "Test1"));
+        app.user().create(new UserData()
+                .withFirst_name("Vasya")
+                .withMiddle_name("Yu")
+                .withFamily_name("Pupkin")
+                .withNickname("VasyaPro")
+                .withCompany("NIICHAVO")
+                .withAddress("Moscow, Leninsky tupik, 13")
+                .withHome_phone("+7 435 1234567")
+                .withCell_phone("+7 916 1234567")
+                .withWork_phone("+7 495 1234567")
+                .withEmail("vasya@pupkin.ru")
+                .withGroup("Test1"));
         List<UserData> before = app.user().list();
-        UserData user = new UserData(before.get(before.size() - 1).getId(), "Petya", "A", "Ivanov", "PIvanov", "RTSoft", "Tula, tup. Kommunizma, 13", "+7 815 1234567", "+7 812 1452365", "+7 845 2365486", "p_ivanov@microsoft.com", null);
+        UserData user = new UserData()
+                .withId(before.get(before.size() - 1).getId())
+                .withFirst_name("Petya")
+                .withMiddle_name("A")
+                .withFamily_name("Ivanov")
+                .withNickname("PIvanov")
+                .withCompany("RTSoft")
+                .withAddress("Tula, tup. Kommunizma, 13")
+                .withHome_phone("+7 815 1234567")
+                .withCell_phone("+7 812 1452365")
+                .withWork_phone("+7 845 2365486")
+                .withEmail("p_ivanov@microsoft.com");
         app.user().modify(user, before.size() - 1);
         List<UserData> after = app.user().list();
         Assert.assertEquals(after.size(), before.size()); //сравнение размеров списков до и после удаления

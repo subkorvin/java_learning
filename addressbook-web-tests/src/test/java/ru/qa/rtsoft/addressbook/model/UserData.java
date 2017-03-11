@@ -2,49 +2,20 @@ package ru.qa.rtsoft.addressbook.model;
 
 public class UserData {
 
-  private int id;
-  private final String first_name;
-  private final String middle_name;
-  private final String family_name;
-  private final String nickname;
-  private final String company;
-  private final String address;
-  private final String home_phone;
-  private final String cell_phone;
-  private final String work_phone;
-  private final String email;
+  private int id = Integer.MAX_VALUE;
+  private String first_name;
+  private String middle_name;
+  private String family_name;
+  private String nickname;
+  private String company;
+  private String address;
+  private String home_phone;
+  private String cell_phone;
+  private String work_phone;
+  private String email;
   private String group;
 
 
-  public UserData(int id, String first_name, String middle_name, String family_name, String nickname, String company, String address, String home_phone, String cell_phone, String work_phone, String email, String group) {
-    this.id = id;
-    this.first_name = first_name;
-    this.middle_name = middle_name;
-    this.family_name = family_name;
-    this.nickname = nickname;
-    this.company = company;
-    this.address = address;
-    this.home_phone = home_phone;
-    this.cell_phone = cell_phone;
-    this.work_phone = work_phone;
-    this.email = email;
-    this.group = group;
-  }
-
-  public UserData(String first_name, String middle_name, String family_name, String nickname, String company, String address, String home_phone, String cell_phone, String work_phone, String email, String group) {
-    this.id = Integer.MAX_VALUE;
-    this.first_name = first_name;
-    this.middle_name = middle_name;
-    this.family_name = family_name;
-    this.nickname = nickname;
-    this.company = company;
-    this.address = address;
-    this.home_phone = home_phone;
-    this.cell_phone = cell_phone;
-    this.work_phone = work_phone;
-    this.email = email;
-    this.group = group;
-  }
 
   public String getFirst_name() {
     return first_name;
@@ -92,6 +63,66 @@ public class UserData {
 
   public int getId() {
     return id;
+  }
+
+  public UserData withId(int id) {
+    this.id = id;
+    return this;
+  }
+
+  public UserData withFirst_name(String first_name) {
+    this.first_name = first_name;
+    return this;
+  }
+
+  public UserData withMiddle_name(String middle_name) {
+    this.middle_name = middle_name;
+    return this;
+  }
+
+  public UserData withFamily_name(String family_name) {
+    this.family_name = family_name;
+    return this;
+  }
+
+  public UserData withNickname(String nickname) {
+    this.nickname = nickname;
+    return this;
+  }
+
+  public UserData withCompany(String company) {
+    this.company = company;
+    return this;
+  }
+
+  public UserData withAddress(String address) {
+    this.address = address;
+    return this;
+  }
+
+  public UserData withHome_phone(String home_phone) {
+    this.home_phone = home_phone;
+    return this;
+  }
+
+  public UserData withCell_phone(String cell_phone) {
+    this.cell_phone = cell_phone;
+    return this;
+  }
+
+  public UserData withWork_phone(String work_phone) {
+    this.work_phone = work_phone;
+    return this;
+  }
+
+  public UserData withEmail(String email) {
+    this.email = email;
+    return this;
+  }
+
+  public UserData withGroup(String group) {
+    this.group = group;
+    return this;
   }
 
   @Override

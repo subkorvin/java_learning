@@ -108,7 +108,7 @@ public class UserHelper extends HelperBase {
       String first_name = element.findElement(By.xpath(".//td[3]")).getText();
       String last_name = element.findElement(By.xpath(".//td[2]")).getText();
       int id = Integer.parseInt(element.findElement(By.tagName("input")).getAttribute("value"));
-      UserData user = new UserData(id, first_name, null, last_name, null, null, null, null, null, null, null, null);
+      UserData user = new UserData().withId(id).withFirst_name(first_name).withFamily_name(last_name);
       users.add(user);
     }
     return users;
