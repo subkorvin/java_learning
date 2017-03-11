@@ -14,20 +14,24 @@ public class GroupModificationTests extends TestBase {
 
   @BeforeMethod
   public void ensurePreconditions() {
-    app.getNavigationHelper().gotoGroupPage();
-    if (!app.getGroupHelper().isThereAGroup()) {
-      app.getGroupHelper().createGroup(new GroupData("Test1", "Test2", "Test3"));
+    app.goTo().groupPage();
+    if (app.group().list().size() == 0) {
+      app.group().create(new GroupData().withGroupname("Test1").withGroupheader("Test2").withGroupfooter("Test3"));
     }
   }
 
   @Test
   public void testGroupModification () {
-    List<GroupData> before = app.getGroupHelper().getGroupList();
+    List<GroupData> before = app.group().list();
     int groupNumber = 1; // выбор номера группы в естественном виде (groupNumber == before.size() - 1)
     groupNumber = groupNumber - 1; // уменьшаем номер на единицу потому что отсчет идет с нуля
-    GroupData group = new GroupData(before.get(groupNumber).getId(), "Test2", "Test3", "Test4");
-    app.getGroupHelper().modifyGroup(group, groupNumber); // второй параметр - выбор модифицируемой группы, передается в метод modifyGroup и оттуда - в selectGroup
-    List<GroupData> after = app.getGroupHelper().getGroupList();
+    GroupData group = new GroupData()
+            .withId(before.get(groupNumber).getId())
+            .withGroupname("Test2")
+            .withGroupheader("Test3")
+            .withGroupfooter("Test4");
+    app.group().modify(group, groupNumber); // второй параметр - выбор модифицируемой группы, передается в метод modify и оттуда - в selectGroup
+    List<GroupData> after = app.group().list();
     Assert.assertEquals(after.size(), before.size());
 
     before.remove(groupNumber);

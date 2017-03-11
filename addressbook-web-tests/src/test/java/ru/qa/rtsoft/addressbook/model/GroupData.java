@@ -1,28 +1,30 @@
 package ru.qa.rtsoft.addressbook.model;
 
 public class GroupData {
-  private int id;
-  private final String groupname;
-  private final String groupheader;
-  private final String groupfooter;
+  private int id = Integer.MAX_VALUE;
+  private String groupname;
+  private String groupheader;
+  private String groupfooter;
 
-  public GroupData(int id, String groupname, String groupheader, String groupfooter) {
+
+  public GroupData withId(int id) {
     this.id = id;
-    this.groupname = groupname;
-    this.groupheader = groupheader;
-    this.groupfooter = groupfooter;
+    return this;
   }
 
-  public GroupData(String groupname, String groupheader, String groupfooter) {
-    this.id = Integer.MAX_VALUE;
+  public GroupData withGroupname(String groupname) {
     this.groupname = groupname;
-    this.groupheader = groupheader;
-    this.groupfooter = groupfooter;
+    return this;
   }
 
+  public GroupData withGroupheader(String groupheader) {
+    this.groupheader = groupheader;
+    return this;
+  }
 
-  public void setId(int id) {
-    this.id = id;
+  public GroupData withGroupfooter(String groupfooter) {
+    this.groupfooter = groupfooter;
+    return this;
   }
 
   public int getId() {

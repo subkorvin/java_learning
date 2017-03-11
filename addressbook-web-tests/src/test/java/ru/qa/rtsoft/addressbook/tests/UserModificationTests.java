@@ -22,14 +22,14 @@ public class UserModificationTests extends TestBase {
     *   если номер корректный - модифицируем пользователя
     * если нет - переходим к проверке наличия хотя бы одной группы
     */
-    if (app.getUserHelper().isThereAUser()) {
-      List<UserData> before = app.getUserHelper().getUsersList();
-      int userNumber = 1; //номер модифицируемого пользователя в естественном виде
+    if (app.user().list().size() != 0) {
+      List<UserData> before = app.user().list();
+      int userNumber = 5; //номер модифицируемого пользователя в естественном виде
       userNumber = userNumber - 1; // уменьшаем номер на единицу, потому что отсчет идет с нуля
       if (userNumber >= 0 && userNumber < before.size()) {
         UserData user = new UserData(before.get(userNumber).getId(), "Petya", "A", "Ivanov", "PIvanov", "RTSoft", "Tula, tup. Kommunizma, 13", "+7 815 1234567", "+7 812 1452365", "+7 845 2365486", "p_ivanov@microsoft.com", null);
-        app.getUserHelper().modifyUser(user, userNumber);
-        List<UserData> after = app.getUserHelper().getUsersList();
+        app.user().modify(user, userNumber);
+        List<UserData> after = app.user().list();
         Assert.assertEquals(after.size(), before.size()); //сравнение размеров списков до и после удаления
         before.remove(userNumber);
         before.add(user);
@@ -42,20 +42,20 @@ public class UserModificationTests extends TestBase {
         return;
       }
     } else {
-      app.getNavigationHelper().gotoGroupPage();
+      app.goTo().groupPage();
       /*
       * пользователя нет
       * проверяем наличие хотя бы одной группы
       * если группа есть - выходим из if и переходим к созданию пользователя и его модификации
       * если группы нет - создаем группу, создаем пользователя и модифицируем его
       */
-      if (!app.getGroupHelper().isThereAGroup()) {
-        app.getGroupHelper().createGroup(new GroupData("Test1", "Test2", "Test3"));
-        app.getUserHelper().createUser(new UserData("Vasya", "Yu", "Pupkin", "VasyaPro", "NIICHAVO", "Moscow, Leninsky tupik, 13", "+7 435 1234567", "+7 916 1234567", "+7 495 1234567", "vasya@pupkin.ru", "Test1"));
-        List<UserData> before = app.getUserHelper().getUsersList();
+      if (app.group().list().size() == 0) {
+        app.group().create(new GroupData().withGroupname("Test1").withGroupheader("Test2").withGroupfooter("Test3"));
+        app.user().create(new UserData("Vasya", "Yu", "Pupkin", "VasyaPro", "NIICHAVO", "Moscow, Leninsky tupik, 13", "+7 435 1234567", "+7 916 1234567", "+7 495 1234567", "vasya@pupkin.ru", "Test1"));
+        List<UserData> before = app.user().list();
         UserData user = new UserData(before.get(before.size() - 1).getId(), "Petya", "A", "Ivanov", "PIvanov", "RTSoft", "Tula, tup. Kommunizma, 13", "+7 815 1234567", "+7 812 1452365", "+7 845 2365486", "p_ivanov@microsoft.com", null);
-        app.getUserHelper().modifyUser(user, before.size() - 1);
-        List<UserData> after = app.getUserHelper().getUsersList();
+        app.user().modify(user, before.size() - 1);
+        List<UserData> after = app.user().list();
         Assert.assertEquals(after.size(), before.size()); //сравнение размеров списков до и после удаления
         before.remove(before.size() - 1);
         before.add(user);
@@ -66,11 +66,11 @@ public class UserModificationTests extends TestBase {
         * группа есть,
         * создаем пользователя и модифицируем его
         */
-        app.getUserHelper().createUser(new UserData("Vasya", "Yu", "Pupkin", "VasyaPro", "NIICHAVO", "Moscow, Leninsky tupik, 13", "+7 435 1234567", "+7 916 1234567", "+7 495 1234567", "vasya@pupkin.ru", "Test1"));
-        List<UserData> before = app.getUserHelper().getUsersList();
+        app.user().create(new UserData("Vasya", "Yu", "Pupkin", "VasyaPro", "NIICHAVO", "Moscow, Leninsky tupik, 13", "+7 435 1234567", "+7 916 1234567", "+7 495 1234567", "vasya@pupkin.ru", "Test1"));
+        List<UserData> before = app.user().list();
         UserData user = new UserData(before.get(before.size() - 1).getId(), "Petya", "A", "Ivanov", "PIvanov", "RTSoft", "Tula, tup. Kommunizma, 13", "+7 815 1234567", "+7 812 1452365", "+7 845 2365486", "p_ivanov@microsoft.com", null);
-        app.getUserHelper().modifyUser(user, before.size() - 1);
-        List<UserData> after = app.getUserHelper().getUsersList();
+        app.user().modify(user, before.size() - 1);
+        List<UserData> after = app.user().list();
         Assert.assertEquals(after.size(), before.size()); //сравнение размеров списков до и после удаления
         before.remove(before.size() - 1);
         before.add(user);
