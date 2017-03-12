@@ -5,8 +5,7 @@ import org.testng.annotations.Test;
 import ru.qa.rtsoft.addressbook.model.GroupData;
 import ru.qa.rtsoft.addressbook.model.UserData;
 
-import java.util.Comparator;
-import java.util.List;
+import java.util.Set;
 
 
 public class UserCreationTest extends TestBase {
@@ -14,11 +13,11 @@ public class UserCreationTest extends TestBase {
   @Test
   public void testUserCreation() {
     app.goTo().groupPage();
-    if (app.group().list().size() == 0) { // проверяем наличие хотя бы одной группы, если есть - переходим к созданию пользователя, если нет - создаем группу
+    if (app.group().set().size() == 0) { // проверяем наличие хотя бы одной группы, если есть - переходим к созданию пользователя, если нет - создаем группу
       app.group().create(new GroupData().withGroupname("Test1").withGroupheader("Test2").withGroupfooter("Test3"));
     }
-    app.goTo().returnToHomePage(); // переход требуется для корректного вычисления списка пользователей до добавления
-    List<UserData> before = app.user().list();
+    app.goTo().toHomePage(); // переход требуется для корректного вычисления списка пользователей до добавления
+    Set<UserData> before = app.user().set();
     UserData user = new UserData()
             .withFirst_name("Vasya")
             .withMiddle_name("Yu")
@@ -32,12 +31,12 @@ public class UserCreationTest extends TestBase {
             .withEmail("vasya@pupkin.ru")
             .withGroup("Test1");
     app.user().create(user);
-    List<UserData> after = app.user().list();
+    Set<UserData> after = app.user().set();
     Assert.assertEquals(after.size(), before.size() + 1); //сравнение размеров списков до и после удаления
+
+
+    user.withId(after.stream().mapToInt((u) -> u.getId()).max().getAsInt());
     before.add(user);
-    Comparator<? super UserData> byId = (u1, u2) -> Integer.compare(u1.getId(), u2.getId()); //вычисление наибольшего id
-    before.sort(byId);
-    after.sort(byId);
     Assert.assertEquals(before, after);
   }
 }

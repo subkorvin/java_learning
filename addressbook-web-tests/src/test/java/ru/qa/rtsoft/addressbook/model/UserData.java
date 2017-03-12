@@ -141,13 +141,15 @@ public class UserData {
 
     UserData userData = (UserData) o;
 
+    if (id != userData.id) return false;
     if (first_name != null ? !first_name.equals(userData.first_name) : userData.first_name != null) return false;
     return family_name != null ? family_name.equals(userData.family_name) : userData.family_name == null;
   }
 
   @Override
   public int hashCode() {
-    int result = first_name != null ? first_name.hashCode() : 0;
+    int result = id;
+    result = 31 * result + (first_name != null ? first_name.hashCode() : 0);
     result = 31 * result + (family_name != null ? family_name.hashCode() : 0);
     return result;
   }

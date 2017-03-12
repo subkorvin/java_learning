@@ -8,8 +8,9 @@ import org.testng.Assert;
 import ru.qa.rtsoft.addressbook.model.UserData;
 import ru.qa.rtsoft.addressbook.tests.TestBase;
 
-import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 
 /**
@@ -49,19 +50,12 @@ public class UserHelper extends HelperBase {
     click(By.linkText("add new"));
   }
 
-  public void selectUser(int index) {
-    wd.findElements(By.name("selected[]")).get(index).click();
+  private void selectUserById(int id) {
+    wd.findElement(By.cssSelector("input[value='" + id + "']")).click();
   }
 
-  public void initUserModification(int index) {
-    List<WebElement> elements = wd.findElements(By.name("entry"));
-    for (int i = 0; i < elements.size(); i++) {
-      if(i == index) {
-        index += 2;
-        click(By.xpath(".//tr[" + index + "]/td[8]/a/img"));
-        break;
-      }
-    }
+  public void initUserModificationById(int index) {
+    wd.findElement(By.xpath("//a[@href='edit.php?id=" + index + "']/img[@title='Edit']")).click();
   }
 
   public void submitUserModification() {
@@ -80,37 +74,43 @@ public class UserHelper extends HelperBase {
     initNewUserCreation();
     fillUserFormFields(user, true);
     submitNewUserCreation();
-    TestBase.getApp().goTo().returnToHomePage();
+    TestBase.getApp().goTo().toHomePage();
   }
 
   public boolean isThereAUser() {
     return isElementPresent(By.xpath("//div/div[4]/form[2]/table/tbody/tr[2]/td[1]/input"));
   }
 
-  public void delete(int index) {
-    selectUser(index);
+  public void delete(UserData user) {
+    selectUserById(user.getId());
     initUserDeleting();
     confirmationUserDeleting();
-    TestBase.getApp().goTo().returnToHomePage();
+    TestBase.getApp().goTo().toHomePage();
   }
 
-  public void modify(UserData user, int index) {
-    initUserModification(index);
+  public void modify(UserData user) {
+    int index = user.getId();
+    initUserModificationById(index);
     fillUserFormFields(user, false);
     submitUserModification();
-    TestBase.getApp().goTo().returnToHomePage();
+    TestBase.getApp().goTo().toHomePage();
   }
 
-  public List<UserData> list() {
-    List<UserData> users = new ArrayList<UserData>();
+  public Set<UserData> set() {
+    Set<UserData> users = new HashSet<UserData>();
     List<WebElement> elements = wd.findElements(By.name("entry"));
     for (WebElement element : elements) {
       String first_name = element.findElement(By.xpath(".//td[3]")).getText();
       String last_name = element.findElement(By.xpath(".//td[2]")).getText();
       int id = Integer.parseInt(element.findElement(By.tagName("input")).getAttribute("value"));
-      UserData user = new UserData().withId(id).withFirst_name(first_name).withFamily_name(last_name);
+      UserData user = new UserData()
+              .withId(id)
+              .withFirst_name(first_name)
+              .withFamily_name(last_name);
       users.add(user);
     }
     return users;
   }
+
+
 }
