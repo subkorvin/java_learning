@@ -1,11 +1,13 @@
 package ru.qa.rtsoft.addressbook.tests;
 
-import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import ru.qa.rtsoft.addressbook.model.GroupData;
+import ru.qa.rtsoft.addressbook.model.Groups;
 
-import java.util.Set;
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.testng.Assert.assertEquals;
 
 public class GroupDeletingTest extends TestBase {
 
@@ -19,13 +21,12 @@ public class GroupDeletingTest extends TestBase {
 
   @Test
   public void testGroupDeleting() {
-    Set<GroupData> before = app.group().set();
+    Groups before = app.group().set();
     GroupData deletedGroup = before.iterator().next();
     app.group().delete(deletedGroup); //  второй параметр - выбор удаляемой группы, передается в метод delete и оттуда - в selectGroup
-    Set<GroupData> after = app.group().set();
-    Assert.assertEquals(after.size(), before.size() - 1);
+    Groups after = app.group().set();
+    assertEquals(after.size(), before.size() - 1);
 
-    before.remove(deletedGroup);
-    Assert.assertEquals(before, after);
+    assertThat(after, equalTo(before.without(deletedGroup)));
   }
 }

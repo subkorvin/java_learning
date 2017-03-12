@@ -1,13 +1,13 @@
 package ru.qa.rtsoft.addressbook.tests;
 
-import org.testng.Assert;
 import org.testng.annotations.Test;
 import ru.qa.rtsoft.addressbook.model.GroupData;
 import ru.qa.rtsoft.addressbook.model.UserData;
+import ru.qa.rtsoft.addressbook.model.Users;
 
-import java.util.Comparator;
-import java.util.List;
-import java.util.Set;
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.testng.Assert.assertEquals;
 
 /**
  * Created by korvin on 21.02.2017.
@@ -24,7 +24,7 @@ public class UserModificationTests extends TestBase {
     * если нет - переходим к проверке наличия хотя бы одной группы
     */
     if (app.user().set().size() != 0) {
-      Set<UserData> before = app.user().set();
+      Users before = app.user().set();
       UserData modifiedUser = before.iterator().next();
       UserData user = new UserData()
               .withId(modifiedUser.getId())
@@ -39,12 +39,9 @@ public class UserModificationTests extends TestBase {
               .withWork_phone("+7 495 1234567")
               .withEmail("vasya@pupkin.ru");
       app.user().modify(user);
-      Set<UserData> after = app.user().set();
-      Assert.assertEquals(after.size(), before.size()); //сравнение размеров списков до и после удаления
-      before.remove(modifiedUser);
-      before.add(user);
-
-      Assert.assertEquals(before, after);
+      Users after = app.user().set();
+      assertEquals(after.size(), before.size()); //сравнение размеров списков до и после удаления
+      assertThat(after, equalTo(before.without(modifiedUser).withAdded(user)));
     } else {
       app.goTo().groupPage();
       /*
@@ -67,7 +64,7 @@ public class UserModificationTests extends TestBase {
                 .withWork_phone("+7 495 1234567")
                 .withEmail("vasya@pupkin.ru")
                 .withGroup("Test1"));
-        Set<UserData> before = app.user().set();
+        Users before = app.user().set();
         UserData modifiedUser = before.iterator().next();
         UserData user = new UserData()
                 .withId(modifiedUser.getId())
@@ -82,11 +79,9 @@ public class UserModificationTests extends TestBase {
                 .withWork_phone("+7 495 1234567")
                 .withEmail("vasya@pupkin.ru");
         app.user().modify(user);
-        Set<UserData> after = app.user().set();
-        Assert.assertEquals(after.size(), before.size()); //сравнение размеров списков до и после удаления
-        before.remove(modifiedUser);
-        before.add(user);
-        Assert.assertEquals(before, after); // сортировка списков не выполняется, так как пользователь только один
+        Users after = app.user().set();
+        assertEquals(after.size(), before.size()); //сравнение размеров списков до и после удаления
+        assertThat(after, equalTo(before.without(modifiedUser).withAdded(user)));
       } else {
         /*
         * пользователя нет,
@@ -105,7 +100,7 @@ public class UserModificationTests extends TestBase {
                 .withWork_phone("+7 495 1234567")
                 .withEmail("vasya@pupkin.ru")
                 .withGroup("Test1"));
-        Set<UserData> before = app.user().set();
+        Users before = app.user().set();
         UserData modifiedUser = before.iterator().next();
         UserData user = new UserData()
                 .withId(modifiedUser.getId())
@@ -120,11 +115,9 @@ public class UserModificationTests extends TestBase {
                 .withWork_phone("+7 845 2365486")
                 .withEmail("p_ivanov@microsoft.com");
         app.user().modify(user);
-        Set<UserData> after = app.user().set();
-        Assert.assertEquals(after.size(), before.size()); //сравнение размеров списков до и после удаления
-        before.remove(modifiedUser);
-        before.add(user);
-        Assert.assertEquals(before, after); // сортировка списков не выполняется, так как пользователь только один
+        Users after = app.user().set();
+        assertEquals(after.size(), before.size()); //сравнение размеров списков до и после удаления
+        assertThat(after, equalTo(before.without(modifiedUser).withAdded(user)));
       }
     }
   }

@@ -1,12 +1,13 @@
 package ru.qa.rtsoft.addressbook.tests;
 
-import org.testng.Assert;
 import org.testng.annotations.Test;
 import ru.qa.rtsoft.addressbook.model.GroupData;
 import ru.qa.rtsoft.addressbook.model.UserData;
+import ru.qa.rtsoft.addressbook.model.Users;
 
-import java.util.List;
-import java.util.Set;
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.testng.Assert.assertEquals;
 
 /**
  * Created by Korvin on 21.02.2017.
@@ -16,13 +17,12 @@ public class UserDeletingTests extends TestBase {
   @Test
   public void testUserDeleting() {
     if (app.user().set().size() != 0) { // проверка налиичия хотя бы одного пользователя, если есть - удаляем согласно userNumber, если нет - переходим к проверке наличия группы
-      Set<UserData> before = app.user().set();
+      Users before = app.user().set();
       UserData deletedUser = before.iterator().next();
-        app.user().delete(deletedUser);
-        Set<UserData> after = app.user().set();
-        Assert.assertEquals(after.size(), before.size() - 1); //сравнение размеров списков до и после удаления
-        before.remove(deletedUser);
-        Assert.assertEquals(before, after); //сравнение списков целиком
+      app.user().delete(deletedUser);
+      Users after = app.user().set();
+      assertEquals(after.size(), before.size() - 1); //сравнение размеров списков до и после удаления
+      assertThat(after, equalTo(before.without(deletedUser)));
     } else {
       app.goTo().groupPage();
     /*
@@ -44,13 +44,12 @@ public class UserDeletingTests extends TestBase {
                 .withWork_phone("+7 495 1234567")
                 .withEmail("vasya@pupkin.ru")
                 .withGroup("Test1"));
-        Set<UserData> before = app.user().set();
+        Users before = app.user().set();
         UserData deletedUser = before.iterator().next();
         app.user().delete(deletedUser);
-        Set<UserData> after = app.user().set();
-        Assert.assertEquals(after.size(), before.size() - 1); //сравнение размеров списков до и после удаления
-        before.remove(deletedUser);
-        Assert.assertEquals(before, after); //сравнение списков целиком
+        Users after = app.user().set();
+        assertEquals(after.size(), before.size() - 1); //сравнение размеров списков до и после удаления
+        assertThat(after, equalTo(before.without(deletedUser)));
 
       } else { // если группа есть, создаем пользователя и удаляем его же
         app.user().create(new UserData()
@@ -65,13 +64,12 @@ public class UserDeletingTests extends TestBase {
                 .withWork_phone("+7 495 1234567")
                 .withEmail("vasya@pupkin.ru")
                 .withGroup("Test1"));
-        Set<UserData> before = app.user().set();
+        Users before = app.user().set();
         UserData deletedUser = before.iterator().next();
         app.user().delete(deletedUser);
-        Set<UserData> after = app.user().set();
-        Assert.assertEquals(after.size(), before.size() - 1); //сравнение размеров списков до и после удаления
-        before.remove(deletedUser);
-        Assert.assertEquals(before, after); //сравнение списков целиком
+        Users after = app.user().set();
+        assertEquals(after.size(), before.size() - 1); //сравнение размеров списков до и после удаления
+        assertThat(after, equalTo(before.without(deletedUser)));
       }
     }
   }

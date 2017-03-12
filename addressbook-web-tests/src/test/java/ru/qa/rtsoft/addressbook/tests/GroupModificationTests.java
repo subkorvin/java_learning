@@ -1,11 +1,13 @@
 package ru.qa.rtsoft.addressbook.tests;
 
-import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import ru.qa.rtsoft.addressbook.model.GroupData;
+import ru.qa.rtsoft.addressbook.model.Groups;
 
-import java.util.*;
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.testng.Assert.assertEquals;
 
 /**
  * Created by korvin on 21.02.2017.
@@ -22,7 +24,7 @@ public class GroupModificationTests extends TestBase {
 
   @Test
   public void testGroupModification () {
-    Set<GroupData> before = app.group().set();
+    Groups before = app.group().set();
     GroupData modifiedGroup = before.iterator().next();
     GroupData group = new GroupData()
             .withId(modifiedGroup.getId())
@@ -30,11 +32,8 @@ public class GroupModificationTests extends TestBase {
             .withGroupheader("Test3")
             .withGroupfooter("Test4");
     app.group().modify(group); // второй параметр - выбор модифицируемой группы, передается в метод modify и оттуда - в selectGroup
-    Set<GroupData> after = app.group().set();
-    Assert.assertEquals(after.size(), before.size());
-
-    before.remove(modifiedGroup);
-    before.add(group);
-    Assert.assertEquals(before, after);
+    Groups after = app.group().set();
+    assertEquals(after.size(), before.size());
+    assertThat(after, equalTo(before.without(modifiedGroup).withAdded(group)));
   }
 }

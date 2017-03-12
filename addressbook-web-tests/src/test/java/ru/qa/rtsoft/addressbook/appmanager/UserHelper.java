@@ -6,6 +6,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
 import ru.qa.rtsoft.addressbook.model.UserData;
+import ru.qa.rtsoft.addressbook.model.Users;
 import ru.qa.rtsoft.addressbook.tests.TestBase;
 
 import java.util.HashSet;
@@ -96,8 +97,8 @@ public class UserHelper extends HelperBase {
     TestBase.getApp().goTo().toHomePage();
   }
 
-  public Set<UserData> set() {
-    Set<UserData> users = new HashSet<UserData>();
+  public Users set() {
+    Users users = new Users();
     List<WebElement> elements = wd.findElements(By.name("entry"));
     for (WebElement element : elements) {
       String first_name = element.findElement(By.xpath(".//td[3]")).getText();
