@@ -14,8 +14,13 @@ public class UserData {
   private String work_phone;
   private String email;
   private String group;
+  private String allPhones;
 
 
+  public UserData withAllPhones(String allPhones) {
+    this.allPhones = allPhones;
+    return this;
+  }
 
   public String getFirst_name() {
     return first_name;
@@ -59,6 +64,10 @@ public class UserData {
 
   public String getGroup() {
     return group;
+  }
+
+  public String getAllPhones() {
+    return allPhones;
   }
 
   public int getId() {

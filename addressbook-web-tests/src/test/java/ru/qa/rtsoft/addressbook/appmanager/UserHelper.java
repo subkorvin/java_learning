@@ -112,14 +112,26 @@ public class UserHelper extends HelperBase {
       String first_name = element.findElement(By.xpath(".//td[3]")).getText();
       String last_name = element.findElement(By.xpath(".//td[2]")).getText();
       int id = Integer.parseInt(element.findElement(By.tagName("input")).getAttribute("value"));
+      String allPhones = element.findElement(By.xpath(".//td[6]")).getText();
       UserData user = new UserData()
               .withId(id)
               .withFirst_name(first_name)
-              .withFamily_name(last_name);
+              .withFamily_name(last_name)
+              .withAllPhones(allPhones);
       userCache.add(user);
     }
     return new Users(userCache);
   }
 
 
+  public UserData infofromEditForm(UserData user) {
+    initUserModificationById(user.getId());
+    String firstname = wd.findElement(By.name("firstname")).getAttribute("value");
+    String lastname = wd.findElement(By.name("lastname")).getAttribute("value");
+    String home = wd.findElement(By.name("home")).getAttribute("value");
+    String mobile = wd.findElement(By.name("mobile")).getAttribute("value");
+    String work = wd.findElement(By.name("work")).getAttribute("value");
+    wd.navigate().back();
+    return new UserData().withId(user.getId()).withFirst_name(firstname).withFamily_name(lastname).withHome_phone(home).withCell_phone(mobile).withWork_phone(work);
+  }
 }
