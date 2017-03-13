@@ -39,6 +39,8 @@ public class UserHelper extends HelperBase {
     type((By.name("mobile")), userData.getCell_phone());
     type((By.name("work")), userData.getWork_phone());
     type((By.name("email")), userData.getEmail());
+    type((By.name("email2")), userData.getEmail2());
+    type((By.name("email3")), userData.getEmail3());
 
     if (creation) {
       new Select(wd.findElement(By.name("new_group"))).selectByVisibleText(userData.getGroup());
@@ -113,11 +115,17 @@ public class UserHelper extends HelperBase {
       String last_name = element.findElement(By.xpath(".//td[2]")).getText();
       int id = Integer.parseInt(element.findElement(By.tagName("input")).getAttribute("value"));
       String allPhones = element.findElement(By.xpath(".//td[6]")).getText();
+      String address = element.findElement(By.xpath(".//td[4]")).getText();
+      String[] emails = element.findElement(By.xpath(".//td[5]")).getText().split("\n");
       UserData user = new UserData()
               .withId(id)
               .withFirst_name(first_name)
               .withFamily_name(last_name)
-              .withAllPhones(allPhones);
+              .withAllPhones(allPhones)
+              .withAddress(address)
+              .withEmail(emails[0])
+              .withEmail2(emails[1])
+              .withEmail3(emails[2]);
       userCache.add(user);
     }
     return new Users(userCache);
@@ -131,7 +139,21 @@ public class UserHelper extends HelperBase {
     String home = wd.findElement(By.name("home")).getAttribute("value");
     String mobile = wd.findElement(By.name("mobile")).getAttribute("value");
     String work = wd.findElement(By.name("work")).getAttribute("value");
+    String address = wd.findElement(By.name("address")).getAttribute("value");
+    String email = wd.findElement(By.name("email")).getAttribute("value");
+    String email2 = wd.findElement(By.name("email2")).getAttribute("value");
+    String email3 = wd.findElement(By.name("email3")).getAttribute("value");
     wd.navigate().back();
-    return new UserData().withId(user.getId()).withFirst_name(firstname).withFamily_name(lastname).withHome_phone(home).withCell_phone(mobile).withWork_phone(work);
+    return new UserData()
+            .withId(user.getId())
+            .withFirst_name(firstname)
+            .withFamily_name(lastname)
+            .withHome_phone(home)
+            .withCell_phone(mobile)
+            .withWork_phone(work)
+            .withAddress(address)
+            .withEmail(email)
+            .withEmail2(email2)
+            .withEmail3(email3);
   }
 }
