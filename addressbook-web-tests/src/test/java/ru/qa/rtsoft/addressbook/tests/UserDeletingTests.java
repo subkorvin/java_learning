@@ -20,8 +20,8 @@ public class UserDeletingTests extends TestBase {
       Users before = app.user().set();
       UserData deletedUser = before.iterator().next();
       app.user().delete(deletedUser);
+      assertEquals(app.group().count(), before.size() - 1); //сравнение размеров списков до и после удаления
       Users after = app.user().set();
-      assertEquals(after.size(), before.size() - 1); //сравнение размеров списков до и после удаления
       assertThat(after, equalTo(before.without(deletedUser)));
     } else {
       app.goTo().groupPage();
@@ -47,8 +47,8 @@ public class UserDeletingTests extends TestBase {
         Users before = app.user().set();
         UserData deletedUser = before.iterator().next();
         app.user().delete(deletedUser);
+        assertEquals(app.group().count(), before.size() - 1); //сравнение размеров списков до и после удаления
         Users after = app.user().set();
-        assertEquals(after.size(), before.size() - 1); //сравнение размеров списков до и после удаления
         assertThat(after, equalTo(before.without(deletedUser)));
 
       } else { // если группа есть, создаем пользователя и удаляем его же
@@ -67,8 +67,8 @@ public class UserDeletingTests extends TestBase {
         Users before = app.user().set();
         UserData deletedUser = before.iterator().next();
         app.user().delete(deletedUser);
+        assertEquals(app.group().count(), before.size() - 1); //сравнение размеров списков до и после удаления
         Users after = app.user().set();
-        assertEquals(after.size(), before.size() - 1); //сравнение размеров списков до и после удаления
         assertThat(after, equalTo(before.without(deletedUser)));
       }
     }

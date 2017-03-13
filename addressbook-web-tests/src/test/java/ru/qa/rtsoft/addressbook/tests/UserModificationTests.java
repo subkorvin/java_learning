@@ -39,8 +39,8 @@ public class UserModificationTests extends TestBase {
               .withWork_phone("+7 495 1234567")
               .withEmail("vasya@pupkin.ru");
       app.user().modify(user);
+      assertEquals(app.group().count(), before.size()); //сравнение размеров списков до и после удаления
       Users after = app.user().set();
-      assertEquals(after.size(), before.size()); //сравнение размеров списков до и после удаления
       assertThat(after, equalTo(before.without(modifiedUser).withAdded(user)));
     } else {
       app.goTo().groupPage();
@@ -79,8 +79,8 @@ public class UserModificationTests extends TestBase {
                 .withWork_phone("+7 495 1234567")
                 .withEmail("vasya@pupkin.ru");
         app.user().modify(user);
+        assertEquals(app.group().count(), before.size()); //сравнение размеров списков до и после удаления
         Users after = app.user().set();
-        assertEquals(after.size(), before.size()); //сравнение размеров списков до и после удаления
         assertThat(after, equalTo(before.without(modifiedUser).withAdded(user)));
       } else {
         /*
@@ -115,8 +115,8 @@ public class UserModificationTests extends TestBase {
                 .withWork_phone("+7 845 2365486")
                 .withEmail("p_ivanov@microsoft.com");
         app.user().modify(user);
+        assertEquals(app.group().count(), before.size()); //сравнение размеров списков до и после удаления
         Users after = app.user().set();
-        assertEquals(after.size(), before.size()); //сравнение размеров списков до и после удаления
         assertThat(after, equalTo(before.without(modifiedUser).withAdded(user)));
       }
     }

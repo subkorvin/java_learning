@@ -32,8 +32,8 @@ public class UserCreationTest extends TestBase {
             .withEmail("vasya@pupkin.ru")
             .withGroup("Test1");
     app.user().create(user);
+    assertThat(app.group().count(), equalTo(before.size() + 1)); //сравнение размеров списков до и после удаления
     Users after = app.user().set();
-    assertThat(after.size(), equalTo(before.size() + 1)); //сравнение размеров списков до и после удаления
     assertThat(after, equalTo(before.withAdded(user.withId(after.stream().mapToInt((u) -> u.getId()).max().getAsInt()))));
   }
 }
