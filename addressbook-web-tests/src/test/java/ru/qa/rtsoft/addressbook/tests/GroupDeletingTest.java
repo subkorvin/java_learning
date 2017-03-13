@@ -23,7 +23,7 @@ public class GroupDeletingTest extends TestBase {
   public void testGroupDeleting() {
     Groups before = app.group().set();
     GroupData deletedGroup = before.iterator().next();
-    app.group().delete(deletedGroup); //  второй параметр - выбор удаляемой группы, передается в метод delete и оттуда - в selectGroup
+    app.group().delete(deletedGroup);
     Groups after = app.group().set();
     assertEquals(after.size(), before.size() - 1);
 

@@ -31,7 +31,7 @@ public class GroupModificationTests extends TestBase {
             .withGroupname("Test2")
             .withGroupheader("Test3")
             .withGroupfooter("Test4");
-    app.group().modify(group); // второй параметр - выбор модифицируемой группы, передается в метод modify и оттуда - в selectGroup
+    app.group().modify(group);
     Groups after = app.group().set();
     assertEquals(after.size(), before.size());
     assertThat(after, equalTo(before.without(modifiedGroup).withAdded(group)));
