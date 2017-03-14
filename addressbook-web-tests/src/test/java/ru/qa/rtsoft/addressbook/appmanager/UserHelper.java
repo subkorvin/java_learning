@@ -131,7 +131,10 @@ public class UserHelper extends HelperBase {
   public UserData infofromEditForm(UserData user) {
     initUserModificationById(user.getId());
     String firstname = wd.findElement(By.name("firstname")).getAttribute("value");
+    String middlename = wd.findElement(By.name("middlename")).getAttribute("value");
     String lastname = wd.findElement(By.name("lastname")).getAttribute("value");
+    String nickname = wd.findElement(By.name("nickname")).getAttribute("value");
+    String company = wd.findElement(By.name("company")).getAttribute("value");
     String home = wd.findElement(By.name("home")).getAttribute("value");
     String mobile = wd.findElement(By.name("mobile")).getAttribute("value");
     String work = wd.findElement(By.name("work")).getAttribute("value");
@@ -143,13 +146,25 @@ public class UserHelper extends HelperBase {
     return new UserData()
             .withId(user.getId())
             .withFirst_name(firstname)
+            .withMiddle_name(middlename)
             .withFamily_name(lastname)
+            .withNickname(nickname)
+            .withCompany(company)
+            .withAddress(address)
             .withHome_phone(home)
             .withCell_phone(mobile)
             .withWork_phone(work)
-            .withAddress(address)
             .withEmail(email)
             .withEmail2(email2)
             .withEmail3(email3);
+  }
+
+  public void openDetails() {
+    wd.findElement(By.xpath("//img[@title='Details']")).click();
+  }
+
+  public String userDetails() {
+    String details = wd.findElement(By.xpath("//div[@id='content']")).getText();
+    return details;
   }
 }
