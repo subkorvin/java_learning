@@ -13,7 +13,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 /**
  * Created by korvin on 13.03.2017.
  */
-public class UserAdditionalInfoTests extends TestBase{
+public class UserAdditionalInfoTests extends TestBase {
 
   @Test
   public void testUserPhones() {
@@ -26,12 +26,12 @@ public class UserAdditionalInfoTests extends TestBase{
 
   private String mergePhones(UserData user) {
     return Arrays.asList(user.getHome_phone(), user.getCell_phone(), user.getWork_phone())
-            .stream().filter((s) -> ! equals(""))
+            .stream().filter((s) -> ! s.equals(""))
             .map(UserAdditionalInfoTests::cleaned)
             .collect(Collectors.joining("\n"));
-    }
+  }
 
-  public static String cleaned (String phone) {
+  public static String cleaned(String phone) {
     return phone.replaceAll("\\s", "").replaceAll("[-()]", "");
   }
 
@@ -45,14 +45,17 @@ public class UserAdditionalInfoTests extends TestBase{
   }
 
   @Test
-  public void testEmails(){
+  public void testEmails() {
     app.goTo().toHomePage();
     UserData user = app.user().set().iterator().next();
     UserData userInfoFromEditForm = app.user().infofromEditForm(user);
 
-    assertThat(user.getEmail(), equalToObject(userInfoFromEditForm.getEmail()));
-    assertThat(user.getEmail2(), equalToObject(userInfoFromEditForm.getEmail2()));
-    assertThat(user.getEmail3(), equalToObject(userInfoFromEditForm.getEmail3()));
+    assertThat(user.getAllEmails(), equalToObject(mergeEmails(userInfoFromEditForm)));
   }
 
+  private String mergeEmails(UserData user) {
+    return Arrays.asList(user.getEmail(), user.getEmail2(), user.getEmail3())
+            .stream().filter((s) -> ! s.equals(""))
+            .collect(Collectors.joining("\n"));
+  }
 }

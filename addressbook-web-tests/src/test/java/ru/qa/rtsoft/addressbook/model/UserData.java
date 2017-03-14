@@ -1,7 +1,5 @@
 package ru.qa.rtsoft.addressbook.model;
 
-import javax.jws.soap.SOAPBinding;
-
 public class UserData {
 
   private int id = Integer.MAX_VALUE;
@@ -19,6 +17,7 @@ public class UserData {
   private String email3;
   private String group;
   private String allPhones;
+  private String allEmails;
 
 
   //Getters
@@ -82,6 +81,9 @@ public class UserData {
     return email3;
   }
 
+  public String getAllEmails() {
+    return allEmails;
+  }
 
   //Setters
   public UserData withId(int id) {
@@ -159,6 +161,10 @@ public class UserData {
     return this;
   }
 
+  public UserData withAllEmails(String allEmails) {
+    this.allEmails = allEmails;
+    return this;
+  }
 
 
   @Override

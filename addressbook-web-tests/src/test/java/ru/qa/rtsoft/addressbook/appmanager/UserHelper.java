@@ -9,9 +9,7 @@ import ru.qa.rtsoft.addressbook.model.UserData;
 import ru.qa.rtsoft.addressbook.model.Users;
 import ru.qa.rtsoft.addressbook.tests.TestBase;
 
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 
 /**
@@ -116,16 +114,14 @@ public class UserHelper extends HelperBase {
       int id = Integer.parseInt(element.findElement(By.tagName("input")).getAttribute("value"));
       String allPhones = element.findElement(By.xpath(".//td[6]")).getText();
       String address = element.findElement(By.xpath(".//td[4]")).getText();
-      String[] emails = element.findElement(By.xpath(".//td[5]")).getText().split("\n");
+      String allEmails = element.findElement(By.xpath(".//td[5]")).getText();
       UserData user = new UserData()
               .withId(id)
               .withFirst_name(first_name)
               .withFamily_name(last_name)
               .withAllPhones(allPhones)
               .withAddress(address)
-              .withEmail(emails[0])
-              .withEmail2(emails[1])
-              .withEmail3(emails[2]);
+              .withAllEmails(allEmails);
       userCache.add(user);
     }
     return new Users(userCache);
