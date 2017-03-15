@@ -1,11 +1,8 @@
 package ru.qa.rtsoft.addressbook.tests;
 
-import org.openqa.selenium.By;
 import org.testng.annotations.Test;
-import ru.qa.rtsoft.addressbook.appmanager.HelperBase;
 import ru.qa.rtsoft.addressbook.model.UserData;
 
-import javax.jws.soap.SOAPBinding;
 import java.util.Arrays;
 import java.util.stream.Collectors;
 
@@ -69,8 +66,7 @@ public class UserAdditionalInfoTests extends TestBase {
     app.goTo().toHomePage();
     UserData user = app.user().set().iterator().next();
     UserData userInfoFromEditForm = app.user().infofromEditForm(user);
-
-    assertThat(cleanedDetais(details), equalToObject(mergeTwoBlocks(userInfoFromEditForm)));
+    assertThat(cleanedDetais(details), equalToObject(mergeAll(userInfoFromEditForm)));
   }
 
   private String mergeNames(UserData user) {
@@ -83,49 +79,45 @@ public class UserAdditionalInfoTests extends TestBase {
             .stream().collect(Collectors.joining("\n"));
   }
 
-  private String mergeWorkPhone (UserData user) {
+  private String mergeWorkPhone(UserData user) {
     return Arrays.asList("", user.getWork_phone())
             .stream()
-            .filter((s) -> ! s.equals("Work:"))
+            .filter((s) -> !s.equals("Work:"))
             .collect(Collectors.joining("W: "));
   }
 
-  private String mergeHomePhone (UserData user) {
+  private String mergeHomePhone(UserData user) {
     return Arrays.asList("", user.getHome_phone())
             .stream()
-            .filter((s) -> ! s.equals("Home:"))
+            .filter((s) -> !s.equals("Home:"))
             .collect(Collectors.joining("H: "));
   }
 
-  private String mergeCellPhone (UserData user) {
+  private String mergeCellPhone(UserData user) {
     return Arrays.asList("", user.getCell_phone())
             .stream()
-            .filter((s) -> ! s.equals("Mobile:"))
+            .filter((s) -> !s.equals("Mobile:"))
             .collect(Collectors.joining("M: "));
   }
 
-  private String mergeTwoBlocks(UserData user) {
-    return Arrays.asList(mergeFirstBlock(user), mergePhonesWithSuffix(user), mergeEmails(user))
-            .stream()
-            .map(UserAdditionalInfoTests::cleanedDetais)
-            .collect(Collectors.joining("\n\n"));
-  }
-
-  private String mergePhonesWithSuffix (UserData user) {
+  private String mergePhonesWithPrefix(UserData user) {
     return Arrays.asList(mergeHomePhone(user), mergeCellPhone(user), mergeWorkPhone(user))
             .stream()
             .filter((s) -> !s.equals(""))
             .collect(Collectors.joining("\n"));
   }
 
+  private String mergeAll(UserData user) {
+    return Arrays.asList(mergeFirstBlock(user), mergePhonesWithPrefix(user), mergeEmails(user))
+            .stream()
+            .map(UserAdditionalInfoTests::cleanedDetais)
+            .collect(Collectors.joining("\n\n"));
+  }
+
   public static String cleanedDetais(String details) {
-    return details.replaceAll("Member of: Test1", "").replaceAll("\n\n\n", "");
+    return details
+            .replaceAll("Member of: Test1", "")
+            .replaceAll("\n\n\n", "")
+            .replaceAll("[WHM]: \n", "");
   }
 }
-
-//  private String mergeFullInformation(ContactInformation contact) {
-//    return Arrays.asList(contact.getFirstname()+ " ", contact.getLastname()+"\n", contact.getAddress()+"\n",
-//            "\nH: " + contact.getHomePhone(),"\nM: " + contact.getMobilePhone(), "\nW: " + contact.getWorkPhone()+"\n\n",
-//            contact.getEmail()+"\n", contact.getEmail2()+"\n", contact.getEmail3())
-//            .stream().filter((s) -> ! s.equals("")).collect(Collectors.joining());
-//  }
