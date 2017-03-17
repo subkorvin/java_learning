@@ -1,5 +1,7 @@
 package ru.qa.rtsoft.addressbook.model;
 
+import java.io.File;
+
 public class UserData {
 
   private int id = Integer.MAX_VALUE;
@@ -18,6 +20,7 @@ public class UserData {
   private String group;
   private String allPhones;
   private String allEmails;
+  private File photo;
 
 
   //Getters
@@ -83,6 +86,10 @@ public class UserData {
 
   public String getAllEmails() {
     return allEmails;
+  }
+
+  public File getPhoto() {
+    return photo;
   }
 
   //Setters
@@ -165,6 +172,12 @@ public class UserData {
     this.allEmails = allEmails;
     return this;
   }
+
+  public UserData withPhoto(File photo) {
+    this.photo = photo;
+    return this;
+  }
+
 
 
   @Override
