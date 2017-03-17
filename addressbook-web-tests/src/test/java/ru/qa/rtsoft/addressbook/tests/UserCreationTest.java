@@ -40,13 +40,4 @@ public class UserCreationTest extends TestBase {
     Users after = app.user().set();
     assertThat(after, equalTo(before.withAdded(user.withId(after.stream().mapToInt((u) -> u.getId()).max().getAsInt()))));
   }
-
-  @Test
-  public void testCurrentDir() {
-    File currentDir = new File(".");
-    System.out.println(currentDir.getAbsolutePath());
-    File photo = new File("src/test/resources/11698799_crop.jpg");
-    System.out.println(photo.getAbsolutePath());
-    System.out.println(photo.canWrite());
-  }
 }
