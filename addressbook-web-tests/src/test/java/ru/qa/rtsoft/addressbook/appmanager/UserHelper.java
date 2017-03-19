@@ -168,4 +168,8 @@ public class UserHelper extends HelperBase {
     String details = wd.findElement(By.xpath("//div[@id='content']")).getText();
     return details;
   }
+
+  public int count() {
+    return wd.findElements(By.name("selected[]")).size();
+  }
 }

@@ -6,7 +6,7 @@ import com.beust.jcommander.ParameterException;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.thoughtworks.xstream.XStream;
-import ru.qa.rtsoft.addressbook.model.GroupData;
+import ru.qa.rtsoft.addressbook.model.UserData;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -16,10 +16,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by korvin on 17.03.2017.
+ * Created by Korvin on 19.03.2017.
  */
-public class GroupDataGenerator {
-
+public class UserDataGenerator {
   @Parameter(names = "-c", description = "Group count")
   public int count;
 
@@ -30,7 +29,7 @@ public class GroupDataGenerator {
   public String format;
 
   public static void main(String[] args) throws IOException {
-    GroupDataGenerator generator = new GroupDataGenerator();
+    UserDataGenerator generator = new UserDataGenerator();
     JCommander jCommander = new JCommander(generator);
     try {
       jCommander.parse(args);
@@ -42,52 +41,55 @@ public class GroupDataGenerator {
   }
 
   private void run() throws IOException {
-    List<GroupData> groups = generateGroups(count);
+    List<UserData> users = generateUsers(count);
     if (format.equals("csv")) {
-      saveAsCsv(groups, new File(file));
-    } else if (format.equals("xml")){
-      saveAsXml(groups, new File(file));
-    } else if (format.equals("json")){
-      saveAsJson(groups, new File(file));
+      saveAsCsv(users, new File(file));
+    } else if (format.equals("xml")) {
+      saveAsXml(users, new File(file));
+    } else if (format.equals("json")) {
+      saveAsJson(users, new File(file));
     } else {
       System.out.println("Unrecognized format " + format);
     }
   }
 
-  private void saveAsJson(List<GroupData> groups, File file) throws IOException {
+  private void saveAsJson(List<UserData> users, File file) throws IOException {
     Gson gson = new GsonBuilder().setPrettyPrinting().excludeFieldsWithoutExposeAnnotation().create();
-    String json = gson.toJson(groups);
+    String json = gson.toJson(users);
     Writer writer = new FileWriter(file);
     writer.write(json);
     writer.close();
   }
 
-  private void saveAsXml(List<GroupData> groups, File file) throws IOException {
+  private void saveAsXml(List<UserData> users, File file) throws IOException {
     XStream xstream = new XStream();
-    xstream.processAnnotations(GroupData.class);
-    String xml = xstream.toXML(groups);
+    xstream.processAnnotations(UserData.class);
+    String xml = xstream.toXML(users);
     Writer writer = new FileWriter(file);
     writer.write(xml);
     writer.close();
   }
 
-  private void saveAsCsv(List<GroupData> groups, File file) throws IOException {
+  private void saveAsCsv(List<UserData> users, File file) throws IOException {
     System.out.println(new File(".").getAbsolutePath());
     Writer writer = new FileWriter(file);
-    for (GroupData group : groups) {
-      writer.write(String.format("%s;%s;%s\n", group.getGroupname(), group.getGroupheader(), group.getGroupfooter()));
+    for (UserData user : users) {
+      writer.write(String.format("%s;%s;%s\n", user.getFirst_name(), user.getMiddle_name(), user.getFirst_name(), user.getGroup()));
     }
     writer.close();
   }
 
-  private List<GroupData> generateGroups(int count) {
-    List<GroupData> groups = new ArrayList<GroupData>();
+  private List<UserData> generateUsers(int count) {
+    List<UserData> users = new ArrayList<UserData>();
     for (int i = 0; i < count; i++) {
-      groups.add(new GroupData()
-              .withGroupname(String.format("test %s", i + 3))
-              .withGroupheader(String.format("header \n%s", i + 3))
-              .withGroupfooter(String.format("footer \n%s", i + 3)));
+      users.add(new UserData()
+              .withFirst_name(String.format("Vasia"))
+              .withMiddle_name(String.format("Yu"))
+              .withFamily_name(String.format("Ivanov %s", i))
+              .withNickname(String.format("VasyaPro %s", i))
+              .withCompany("NIICHAVO")
+              .withGroup("Test1"));
     }
-    return groups;
+    return users;
   }
 }
