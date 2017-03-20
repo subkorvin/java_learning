@@ -14,7 +14,7 @@ public class TestBase {
 
   @BeforeSuite
   public void setUp() throws Exception {
-    app = new ApplicationManager(BrowserType.CHROME);
+    app = new ApplicationManager(System.getProperty("browser", BrowserType.CHROME));
     app.init();
   }
 
