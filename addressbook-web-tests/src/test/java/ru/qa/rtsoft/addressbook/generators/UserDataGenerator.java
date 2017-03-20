@@ -54,7 +54,9 @@ public class UserDataGenerator {
   }
 
   private void saveAsJson(List<UserData> users, File file) throws IOException {
-    Gson gson = new GsonBuilder().setPrettyPrinting().excludeFieldsWithoutExposeAnnotation().create();
+    Gson gson = new GsonBuilder().setPrettyPrinting()
+            //.excludeFieldsWithoutExposeAnnotation()
+            .create();
     String json = gson.toJson(users);
     Writer writer = new FileWriter(file);
     writer.write(json);
@@ -81,13 +83,15 @@ public class UserDataGenerator {
 
   private List<UserData> generateUsers(int count) {
     List<UserData> users = new ArrayList<UserData>();
+    File photo = new File("src/test/resources/11698799_crop.jpg");
     for (int i = 0; i < count; i++) {
       users.add(new UserData()
-              .withFirst_name(String.format("Vasia"))
-              .withMiddle_name(String.format("Yu"))
-              .withFamily_name(String.format("Ivanov %s", i))
+              .withFirst_name("Vasia_p")
+              .withMiddle_name("Yu")
+              .withFamily_name(String.format("Ivanov_p %s", i))
               .withNickname(String.format("VasyaPro %s", i))
               .withCompany("NIICHAVO")
+              .withPhoto(photo)
               .withGroup("Test1"));
     }
     return users;
