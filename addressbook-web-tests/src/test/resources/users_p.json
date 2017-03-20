@@ -1,0 +1,38 @@
+[
+  {
+    "id": 2147483647,
+    "first_name": "Vasia_p",
+    "middle_name": "Yu",
+    "family_name": "Ivanov_p 0",
+    "nickname": "VasyaPro 0",
+    "company": "NIICHAVO",
+    "group": "Test1",
+    "photo": {
+      "path": "src\\test\\resources\\11698799_crop.jpg"
+    }
+  },
+  {
+    "id": 2147483647,
+    "first_name": "Vasia_p",
+    "middle_name": "Yu",
+    "family_name": "Ivanov_p 1",
+    "nickname": "VasyaPro 1",
+    "company": "NIICHAVO",
+    "group": "Test1",
+    "photo": {
+      "path": "src\\test\\resources\\11698799_crop.jpg"
+    }
+  },
+  {
+    "id": 2147483647,
+    "first_name": "Vasia_p",
+    "middle_name": "Yu",
+    "family_name": "Ivanov_p 2",
+    "nickname": "VasyaPro 2",
+    "company": "NIICHAVO",
+    "group": "Test1",
+    "photo": {
+      "path": "src\\test\\resources\\11698799_crop.jpg"
+    }
+  }
+]

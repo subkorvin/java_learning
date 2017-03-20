@@ -25,7 +25,7 @@ public class UserCreationTest extends TestBase {
 
   @DataProvider
   public Iterator<Object[]> validUsersFromXml () throws IOException {
-    BufferedReader reader = new BufferedReader(new FileReader(new File("src/test/resources/users.xml")));
+    BufferedReader reader = new BufferedReader(new FileReader(new File("src/test/resources/users1.xml")));
     String xml = "";
     String line = reader.readLine();
     while (line != null) {
@@ -40,7 +40,7 @@ public class UserCreationTest extends TestBase {
 
   @DataProvider
   public Iterator<Object[]> validUsersFromJson () throws IOException {
-    BufferedReader reader = new BufferedReader(new FileReader(new File("src/test/resources/users.json")));
+    BufferedReader reader = new BufferedReader(new FileReader(new File("src/test/resources/users_p.json")));
     String json = "";
     String line = reader.readLine();
     while (line != null) {
@@ -62,7 +62,6 @@ public class UserCreationTest extends TestBase {
     }
     app.goTo().toHomePage(); // переход требуется для корректного вычисления списка пользователей до добавления
     Users before = app.user().set();
-    //File photo = new File("src/test/resources/11698799_crop.jpg");
     app.user().create(user);
     assertThat(app.user().count(), equalTo(before.size() + 1)); //сравнение размеров списков до и после удаления
     Users after = app.user().set();

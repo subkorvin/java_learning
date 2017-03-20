@@ -1,0 +1,29 @@
+<list>
+  <user>
+    <first__name>Vasia</first__name>
+    <middle__name>Yu</middle__name>
+    <family__name>Ivanov 0</family__name>
+    <nickname>VasyaPro 0</nickname>
+    <company>NIICHAVO</company>
+    <group>Test1</group>
+    <photo>src\test\resources\11698799_crop.jpg</photo>
+  </user>
+  <user>
+    <first__name>Vasia</first__name>
+    <middle__name>Yu</middle__name>
+    <family__name>Ivanov 1</family__name>
+    <nickname>VasyaPro 1</nickname>
+    <company>NIICHAVO</company>
+    <group>Test1</group>
+    <photo>src\test\resources\11698799_crop.jpg</photo>
+  </user>
+  <user>
+    <first__name>Vasia</first__name>
+    <middle__name>Yu</middle__name>
+    <family__name>Ivanov 2</family__name>
+    <nickname>VasyaPro 2</nickname>
+    <company>NIICHAVO</company>
+    <group>Test1</group>
+    <photo>src\test\resources\11698799_crop.jpg</photo>
+  </user>
+</list>
