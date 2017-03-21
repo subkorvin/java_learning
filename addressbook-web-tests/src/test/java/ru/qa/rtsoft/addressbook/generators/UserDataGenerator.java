@@ -86,12 +86,19 @@ public class UserDataGenerator {
     File photo = new File("src/test/resources/11698799_crop.jpg");
     for (int i = 0; i < count; i++) {
       users.add(new UserData()
-              .withFirst_name("Vasia_p")
+              .withFirst_name("Vasia")
               .withMiddle_name("Yu")
-              .withFamily_name(String.format("Ivanov_p %s", i))
+              .withFamily_name(String.format("Ivanov %s", i))
               .withNickname(String.format("VasyaPro %s", i))
               .withCompany("NIICHAVO")
               .withPhoto(photo)
+              .withAddress("Moscow, tup. Kommunizma, 13")
+              .withHome_phone("+7 495 1234567")
+              .withCell_phone("+7 916 1234567")
+              .withWork_phone("+7 499 1234567")
+              .withEmail("vasya@pupkin.ru")
+              .withEmail2("vasya_pro.mail.ru")
+              .withEmail3("super.vasya.gmail.com")
               .withGroup("Test1"));
     }
     return users;

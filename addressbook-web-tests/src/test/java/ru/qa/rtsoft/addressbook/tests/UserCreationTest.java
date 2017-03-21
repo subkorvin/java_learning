@@ -6,6 +6,7 @@ import com.thoughtworks.xstream.XStream;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import ru.qa.rtsoft.addressbook.model.GroupData;
+import ru.qa.rtsoft.addressbook.model.Groups;
 import ru.qa.rtsoft.addressbook.model.UserData;
 import ru.qa.rtsoft.addressbook.model.Users;
 
@@ -13,6 +14,8 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -25,7 +28,7 @@ public class UserCreationTest extends TestBase {
 
   @DataProvider
   public Iterator<Object[]> validUsersFromXml () throws IOException {
-    try (BufferedReader reader = new BufferedReader(new FileReader(new File("src/test/resources/users1.xml")))) {
+    try (BufferedReader reader = new BufferedReader(new FileReader(new File("src/test/resources/users.xml")))) {
       String xml = "";
       String line = reader.readLine();
       while (line != null) {
@@ -41,7 +44,7 @@ public class UserCreationTest extends TestBase {
 
   @DataProvider
   public Iterator<Object[]> validUsersFromJson () throws IOException {
-    try (BufferedReader reader = new BufferedReader(new FileReader(new File("src/test/resources/users_p.json")))) {
+    try (BufferedReader reader = new BufferedReader(new FileReader(new File("src/test/resources/users.json")))) {
       String json = "";
       String line = reader.readLine();
       while (line != null) {
