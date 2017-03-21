@@ -6,7 +6,6 @@ import com.thoughtworks.xstream.XStream;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import ru.qa.rtsoft.addressbook.model.GroupData;
-import ru.qa.rtsoft.addressbook.model.Groups;
 import ru.qa.rtsoft.addressbook.model.UserData;
 import ru.qa.rtsoft.addressbook.model.Users;
 
@@ -14,8 +13,6 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -27,7 +24,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 public class UserCreationTest extends TestBase {
 
   @DataProvider
-  public Iterator<Object[]> validUsersFromXml () throws IOException {
+  public Iterator<Object[]> validUsersFromXml() throws IOException {
     try (BufferedReader reader = new BufferedReader(new FileReader(new File("src/test/resources/users.xml")))) {
       String xml = "";
       String line = reader.readLine();
@@ -43,7 +40,7 @@ public class UserCreationTest extends TestBase {
   }
 
   @DataProvider
-  public Iterator<Object[]> validUsersFromJson () throws IOException {
+  public Iterator<Object[]> validUsersFromJson() throws IOException {
     try (BufferedReader reader = new BufferedReader(new FileReader(new File("src/test/resources/users.json")))) {
       String json = "";
       String line = reader.readLine();
@@ -52,14 +49,14 @@ public class UserCreationTest extends TestBase {
         line = reader.readLine();
       }
       Gson gson = new Gson();
-      List<UserData> users = gson.fromJson(json, new TypeToken<List<UserData>>(){}.getType());
+      List<UserData> users = gson.fromJson(json, new TypeToken<List<UserData>>() {
+      }.getType());
       return users.stream().map((g) -> new Object[]{g}).collect(Collectors.toList()).iterator();
     }
   }
 
 
-
-  @Test (dataProvider = "validUsersFromJson")
+  @Test(dataProvider = "validUsersFromJson")
   public void testUserCreation(UserData user) {
     app.goTo().groupPage();
     if (app.group().set().size() == 0) { // проверяем наличие хотя бы одной группы, если есть - переходим к созданию пользователя, если нет - создаем группу
