@@ -6,10 +6,7 @@ import org.openqa.selenium.WebElement;
 import ru.qa.rtsoft.addressbook.model.GroupData;
 import ru.qa.rtsoft.addressbook.model.Groups;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 /**
  * Created by korvin on 20.02.2017.
@@ -77,6 +74,18 @@ public class GroupHelper extends HelperBase {
     groupCache = null;
     returnToGroupPage();
   }
+
+  public boolean findGroup() {
+    List<GroupData> groups = new ArrayList<>(set());
+    for (GroupData group : groups) {
+      String name = group.getGroupname();
+      if (Objects.equals(name, "Test1")) {
+        return true;
+      }
+    }
+    return false;
+  }
+
 
   public boolean isThereAGroup() {
     return isElementPresent(By.name("selected[]"));
