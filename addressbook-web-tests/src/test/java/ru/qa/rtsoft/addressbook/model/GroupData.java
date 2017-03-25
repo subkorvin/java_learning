@@ -80,13 +80,17 @@ public class GroupData {
     GroupData groupData = (GroupData) o;
 
     if (id != groupData.id) return false;
-    return groupname != null ? groupname.equals(groupData.groupname) : groupData.groupname == null;
+    if (groupname != null ? !groupname.equals(groupData.groupname) : groupData.groupname != null) return false;
+    if (groupheader != null ? !groupheader.equals(groupData.groupheader) : groupData.groupheader != null) return false;
+    return groupfooter != null ? groupfooter.equals(groupData.groupfooter) : groupData.groupfooter == null;
   }
 
   @Override
   public int hashCode() {
     int result = id;
     result = 31 * result + (groupname != null ? groupname.hashCode() : 0);
+    result = 31 * result + (groupheader != null ? groupheader.hashCode() : 0);
+    result = 31 * result + (groupfooter != null ? groupfooter.hashCode() : 0);
     return result;
   }
 
