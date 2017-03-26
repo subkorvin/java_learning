@@ -230,13 +230,25 @@ public class UserData {
   }
 
 
-
   @Override
   public String toString() {
     return "UserData{" +
-            "id='" + id + '\'' +
+            "id=" + id +
             ", first_name='" + first_name + '\'' +
+            ", middle_name='" + middle_name + '\'' +
             ", family_name='" + family_name + '\'' +
+            ", nickname='" + nickname + '\'' +
+            ", company='" + company + '\'' +
+            ", address='" + address + '\'' +
+            ", home_phone='" + home_phone + '\'' +
+            ", cell_phone='" + cell_phone + '\'' +
+            ", work_phone='" + work_phone + '\'' +
+            ", email='" + email + '\'' +
+            ", email2='" + email2 + '\'' +
+            ", email3='" + email3 + '\'' +
+            ", group='" + group + '\'' +
+            ", allPhones='" + allPhones + '\'' +
+            ", allEmails='" + allEmails + '\'' +
             '}';
   }
 
@@ -249,14 +261,34 @@ public class UserData {
 
     if (id != userData.id) return false;
     if (first_name != null ? !first_name.equals(userData.first_name) : userData.first_name != null) return false;
-    return family_name != null ? family_name.equals(userData.family_name) : userData.family_name == null;
+    if (middle_name != null ? !middle_name.equals(userData.middle_name) : userData.middle_name != null) return false;
+    if (family_name != null ? !family_name.equals(userData.family_name) : userData.family_name != null) return false;
+    if (nickname != null ? !nickname.equals(userData.nickname) : userData.nickname != null) return false;
+    if (address != null ? !address.equals(userData.address) : userData.address != null) return false;
+    if (home_phone != null ? !home_phone.equals(userData.home_phone) : userData.home_phone != null) return false;
+    if (cell_phone != null ? !cell_phone.equals(userData.cell_phone) : userData.cell_phone != null) return false;
+    if (work_phone != null ? !work_phone.equals(userData.work_phone) : userData.work_phone != null) return false;
+    if (email != null ? !email.equals(userData.email) : userData.email != null) return false;
+    if (email2 != null ? !email2.equals(userData.email2) : userData.email2 != null) return false;
+    if (email3 != null ? !email3.equals(userData.email3) : userData.email3 != null) return false;
+    return group != null ? group.equals(userData.group) : userData.group == null;
   }
 
   @Override
   public int hashCode() {
     int result = id;
     result = 31 * result + (first_name != null ? first_name.hashCode() : 0);
+    result = 31 * result + (middle_name != null ? middle_name.hashCode() : 0);
     result = 31 * result + (family_name != null ? family_name.hashCode() : 0);
+    result = 31 * result + (nickname != null ? nickname.hashCode() : 0);
+    result = 31 * result + (address != null ? address.hashCode() : 0);
+    result = 31 * result + (home_phone != null ? home_phone.hashCode() : 0);
+    result = 31 * result + (cell_phone != null ? cell_phone.hashCode() : 0);
+    result = 31 * result + (work_phone != null ? work_phone.hashCode() : 0);
+    result = 31 * result + (email != null ? email.hashCode() : 0);
+    result = 31 * result + (email2 != null ? email2.hashCode() : 0);
+    result = 31 * result + (email3 != null ? email3.hashCode() : 0);
+    result = 31 * result + (group != null ? group.hashCode() : 0);
     return result;
   }
 }

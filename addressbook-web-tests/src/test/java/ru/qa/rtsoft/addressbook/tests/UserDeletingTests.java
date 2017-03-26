@@ -16,12 +16,12 @@ public class UserDeletingTests extends TestBase {
 
   @Test
   public void testUserDeleting() {
-    if (app.user().set().size() != 0) { // проверка налиичия хотя бы одного пользователя, если есть - удаляем согласно userNumber, если нет - переходим к проверке наличия группы
-      Users before = app.user().set();
+    if (app.db().users().size() != 0) { // проверка налиичия хотя бы одного пользователя, если есть - удаляем согласно userNumber, если нет - переходим к проверке наличия группы
+      Users before = app.db().users();
       UserData deletedUser = before.iterator().next();
       app.user().delete(deletedUser);
       assertEquals(app.group().count(), before.size() - 1); //сравнение размеров списков до и после удаления
-      Users after = app.user().set();
+      Users after = app.db().users();
       assertThat(after, equalTo(before.without(deletedUser)));
     } else {
       app.goTo().groupPage();

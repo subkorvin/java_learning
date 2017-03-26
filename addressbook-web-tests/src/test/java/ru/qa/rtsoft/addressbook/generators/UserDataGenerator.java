@@ -97,8 +97,8 @@ public class UserDataGenerator {
               .withCell_phone("+7 916 1234567")
               .withWork_phone("+7 499 1234567")
               .withEmail("vasya@pupkin.ru")
-              .withEmail2("vasya_pro.mail.ru")
-              .withEmail3("super.vasya.gmail.com")
+              .withEmail2("vasya_pro@mail.ru")
+              .withEmail3("super.vasya@gmail.com")
               .withGroup("Test1"));
     }
     return users;
