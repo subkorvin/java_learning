@@ -3,6 +3,7 @@ package ru.qa.rtsoft.addressbook.tests;
 import com.google.common.reflect.TypeToken;
 import com.google.gson.Gson;
 import com.thoughtworks.xstream.XStream;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import ru.qa.rtsoft.addressbook.model.GroupData;
@@ -56,25 +57,19 @@ public class UserCreationTest extends TestBase {
   }
 
 
+  @BeforeMethod
+  public void ensurePreconditions() {
+    if (app.db().groups().size() == 0) { // проверяем наличие хотя бы одной группы, если нет - создаем группу
+      app.group().create(new GroupData().withGroupname("Test1").withGroupheader("Test2").withGroupfooter("Test3"));
+    }
+  }
+
   @Test(dataProvider = "validUsersFromJson")
   public void testUserCreation(UserData user) {
-    app.goTo().toHomePage(); // переход требуется для корректного вычисления списка пользователей до добавления
     Users before = app.db().users();
-    app.goTo().groupPage();
-    if (app.group().set().size() == 0) { // проверяем наличие хотя бы одной группы, если есть - переходим к созданию пользователя, если нет - создаем группу
-      app.group().create(new GroupData().withGroupname("Test1").withGroupheader("Test2").withGroupfooter("Test3"));
-    } else if (app.group().findGroup()) {
-      app.user().create(user);
-      assertThat(app.user().count(), equalTo(before.size() + 1)); //сравнение размеров списков до и после удаления
-      Users after = app.db().users();
-      assertThat(after, equalTo(before.withAdded(user.withId(after.stream().mapToInt((u) -> u.getId()).max().getAsInt()))));
-    } else {
-      app.goTo().groupPage();
-      app.group().create(new GroupData().withGroupname("Test1").withGroupheader("Test2").withGroupfooter("Test3"));
-      app.user().create(user);
-      assertThat(app.user().count(), equalTo(before.size() + 1)); //сравнение размеров списков до и после удаления
-      Users after = app.db().users();
-      assertThat(after, equalTo(before.withAdded(user.withId(after.stream().mapToInt((u) -> u.getId()).max().getAsInt()))));
-    }
+    app.user().create(user);
+    assertThat(app.user().count(), equalTo(before.size() + 1)); //сравнение размеров списков до и после удаления
+    Users after = app.db().users();
+    assertThat(after, equalTo(before.withAdded(user.withId(after.stream().mapToInt((u) -> u.getId()).max().getAsInt()))));
   }
 }

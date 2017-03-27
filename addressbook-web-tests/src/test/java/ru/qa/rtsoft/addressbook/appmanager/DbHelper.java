@@ -11,6 +11,7 @@ import ru.qa.rtsoft.addressbook.model.UserData;
 import ru.qa.rtsoft.addressbook.model.Users;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Created by Korvin on 25.03.2017.
@@ -30,11 +31,17 @@ public class DbHelper {
   public Groups groups () {
     Session session = sessionFactory.openSession();
     session.beginTransaction();
-    List<GroupData> result = session.createQuery( "from GroupData" ).list();
+    List<GroupData> result = session.createQuery( "from GroupData").list();
     session.getTransaction().commit();
     session.close();
+    for ( GroupData group : result ) {
+      group.withGroupheader(group.getGroupheader().replaceAll("\r\n", "\n")).withGroupfooter(group.getGroupfooter().replaceAll("\r\n", "\n"));
+      System.out.println(group);
+    }
     return new Groups(result);
   }
+
+
   public Users users () {
     Session session = sessionFactory.openSession();
     session.beginTransaction();
