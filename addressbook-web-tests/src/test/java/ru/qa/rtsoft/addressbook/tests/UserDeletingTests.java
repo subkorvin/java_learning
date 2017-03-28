@@ -36,6 +36,7 @@ public class UserDeletingTests extends TestBase {
       assertEquals(app.user().count(), before.size() - 1); //сравнение размеров списков до и после удаления
       Users after = app.db().users();
       assertThat(after, equalTo(before.without(deletedUser)));
+      verifyUserListInUI();
     } else { // создаем пользователя и удаляем его же
       Groups groups = app.db().groups();
       GroupData selectedGroup = groups.iterator().next();
@@ -59,6 +60,7 @@ public class UserDeletingTests extends TestBase {
       assertEquals(app.user().count(), before.size() - 1); //сравнение размеров списков до и после удаления
       Users after = app.db().users();
       assertThat(after, equalTo(before.without(deletedUser)));
+      verifyUserListInUI();
     }
   }
 }

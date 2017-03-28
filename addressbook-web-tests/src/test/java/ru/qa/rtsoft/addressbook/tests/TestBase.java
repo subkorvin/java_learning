@@ -69,18 +69,20 @@ public class TestBase {
   }
 
   public void verifyUserListInUI() {
-    Users dbUsers = app.db().users();
-    Users uiUsers = app.user().set();
-    assertThat(uiUsers, equalTo(dbUsers.stream()
-            .map((u) -> new UserData()
-                    .withId(u.getId())
-                    .withFirst_name(u.getFirst_name())
-                    .withFamily_name(u.getFamily_name())
-                    .withAddress(u.getAddress())
-                    .withAllPhones(u.getHome_phone() + u.getCell_phone() + u.getWork_phone())
-                    .withAllEmails(u.getEmail() + u.getEmail2() + u.getEmail3()))
-                    .collect(Collectors.toSet())));
-    System.out.println("DB\n" + dbUsers + "\n");
-    System.out.println("UI\n" + uiUsers + "\n");
+    if (Boolean.getBoolean("verifyUI")) {
+      Users dbUsers = app.db().users();
+      Users uiUsers = app.user().set();
+      assertThat(uiUsers, equalTo(dbUsers.stream()
+              .map((u) -> new UserData()
+                      .withId(u.getId())
+                      .withFirst_name(u.getFirst_name())
+                      .withFamily_name(u.getFamily_name())
+                      .withAddress(u.getAddress())
+                      .withAllPhones(u.getHome_phone() + u.getCell_phone() + u.getWork_phone())
+                      .withAllEmails(u.getEmail() + u.getEmail2() + u.getEmail3()))
+              .collect(Collectors.toSet())));
+      System.out.println("DB\n" + dbUsers + "\n");
+      System.out.println("UI\n" + uiUsers + "\n");
+    }
   }
 }

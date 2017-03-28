@@ -43,7 +43,7 @@ public class UserCreationTest extends TestBase {
 
   @DataProvider
   public Iterator<Object[]> validUsersFromJson() throws IOException {
-    try (BufferedReader reader = new BufferedReader(new FileReader(new File("src/test/resources/users_1.json")))) {
+    try (BufferedReader reader = new BufferedReader(new FileReader(new File("src/test/resources/users_3.json")))) {
       String json = "";
       String line = reader.readLine();
       while (line != null) {
@@ -72,8 +72,8 @@ public class UserCreationTest extends TestBase {
     GroupData selectedGroup = groups.iterator().next();
     Users before = app.db().users();
     app.user().create(user.withGroup(selectedGroup.getGroupname()));
-    assertThat(app.user().count(), equalTo(before.size() + 1)); //сравнение размеров списков до и после удаления
     Users after = app.db().users();
+    assertThat(after.size(), equalTo(before.size() + 1)); //сравнение размеров списков до и после удаления
     assertThat(after, equalTo(before.withAdded(user.withId(after.stream().mapToInt((u) -> u.getId()).max().getAsInt()))));
     verifyUserListInUI();
   }

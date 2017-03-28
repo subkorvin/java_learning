@@ -58,6 +58,7 @@ public class UserModificationTests extends TestBase {
       assertEquals(app.user().count(), before.size()); //сравнение размеров списков до и после удаления
       Users after = app.db().users();
       assertThat(after, equalTo(before.without(modifiedUser).withAdded(user)));
+      verifyUserListInUI();
     } else {
         /*
         * пользователя нет,
@@ -100,6 +101,7 @@ public class UserModificationTests extends TestBase {
       assertEquals(app.user().count(), before.size()); //сравнение размеров списков до и после удаления
       Users after = app.db().users();
       assertThat(after, equalTo(before.without(modifiedUser).withAdded(user)));
+      verifyUserListInUI();
     }
   }
 }
