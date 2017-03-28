@@ -1,8 +1,8 @@
 [
   {
     "groupname": "test 0",
-    "groupheader": "header \n0",
-    "groupfooter": "footer \n0"
+    "groupheader": "header 0",
+    "groupfooter": "footer 0"
   },
   {
     "groupname": "test 1",

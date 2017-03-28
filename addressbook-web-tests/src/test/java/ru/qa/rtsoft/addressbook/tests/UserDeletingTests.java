@@ -52,7 +52,7 @@ public class UserDeletingTests extends TestBase {
               .withCell_phone("+7 916 1234567")
               .withWork_phone("+7 495 1234567")
               .withEmail("vasya@pupkin.ru")
-              .withGroup(selectedGroup.getGroupname())
+//              .withGroup(selectedGroup.getGroupname())
               .withPhoto(photo));
       Users before = app.db().users();
       UserData deletedUser = before.iterator().next();

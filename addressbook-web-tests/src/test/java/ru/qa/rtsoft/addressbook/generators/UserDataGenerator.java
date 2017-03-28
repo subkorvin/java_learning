@@ -76,7 +76,7 @@ public class UserDataGenerator {
     System.out.println(new File(".").getAbsolutePath());
     try (Writer writer = new FileWriter(file)) {
       for (UserData user : users) {
-        writer.write(String.format("%s;%s;%s\n", user.getFirst_name(), user.getMiddle_name(), user.getFirst_name(), user.getGroup()));
+//        writer.write(String.format("%s;%s;%s\n", user.getFirst_name(), user.getMiddle_name(), user.getFirst_name(), user.getGroup()));
       }
     }
   }
@@ -98,8 +98,8 @@ public class UserDataGenerator {
               .withWork_phone("+7 499 1234567")
               .withEmail("vasya@pupkin.ru")
               .withEmail2("vasya_pro@mail.ru")
-              .withEmail3("super.vasya@gmail.com")
-              .withGroup("Test1"));
+              .withEmail3("super.vasya@gmail.com"));
+//              .withGroup("Test1"));
     }
     return users;
   }

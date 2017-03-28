@@ -71,7 +71,7 @@ public class UserCreationTest extends TestBase {
     Groups groups = app.db().groups();
     GroupData selectedGroup = groups.iterator().next();
     Users before = app.db().users();
-    app.user().create(user.withGroup(selectedGroup.getGroupname()));
+    app.user().create(user.inGroup(selectedGroup));
     Users after = app.db().users();
     assertThat(after.size(), equalTo(before.size() + 1)); //сравнение размеров списков до и после удаления
     assertThat(after, equalTo(before.withAdded(user.withId(after.stream().mapToInt((u) -> u.getId()).max().getAsInt()))));

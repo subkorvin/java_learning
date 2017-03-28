@@ -7,6 +7,8 @@ import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import java.io.File;
+import java.util.HashSet;
+import java.util.Set;
 
 @XStreamAlias("user")
 @Entity
@@ -58,9 +60,13 @@ public class UserData {
   @Type(type = "text")
   private String email3;
 
-  @Expose
-  @Transient
-  private String group;
+//  @Expose
+//  @Transient
+//  private String group;
+
+  @ManyToMany (fetch = FetchType.EAGER)
+  @JoinTable (name = "address_in_groups", joinColumns = @JoinColumn(name = "id"), inverseJoinColumns = @JoinColumn(name = "group_id"))
+  private Set<GroupData> groups = new HashSet<GroupData>();
 
   @Transient
   private String allPhones;
@@ -111,8 +117,13 @@ public class UserData {
     return work_phone;
   }
 
-  public String getGroup() {
-    return group;
+//  public String getGroup() {
+//    return group;
+//  }
+
+
+  public Groups getGroups() {
+    return new Groups(groups);
   }
 
   public String getAllPhones() {
@@ -199,10 +210,10 @@ public class UserData {
     return this;
   }
 
-  public UserData withGroup(String group) {
-    this.group = group;
-    return this;
-  }
+//  public UserData withGroup(String group) {
+//    this.group = group;
+//    return this;
+//  }
 
   public UserData withAllPhones(String allPhones) {
     this.allPhones = allPhones;
@@ -246,7 +257,6 @@ public class UserData {
             ", email='" + email + '\'' +
             ", email2='" + email2 + '\'' +
             ", email3='" + email3 + '\'' +
-            ", group='" + group + '\'' +
             ", allPhones='" + allPhones + '\'' +
             ", allEmails='" + allEmails + '\'' +
             '}';
@@ -290,5 +300,10 @@ public class UserData {
     result = 31 * result + (email2 != null ? email2.hashCode() : 0);
     result = 31 * result + (email3 != null ? email3.hashCode() : 0);
     return result;
+  }
+
+  public UserData inGroup(GroupData selectedGroup) {
+    groups.add(selectedGroup);
+    return this;
   }
 }
