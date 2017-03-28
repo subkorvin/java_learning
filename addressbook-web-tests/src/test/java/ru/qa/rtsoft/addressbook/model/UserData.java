@@ -264,14 +264,14 @@ public class UserData {
     if (middle_name != null ? !middle_name.equals(userData.middle_name) : userData.middle_name != null) return false;
     if (family_name != null ? !family_name.equals(userData.family_name) : userData.family_name != null) return false;
     if (nickname != null ? !nickname.equals(userData.nickname) : userData.nickname != null) return false;
+    if (company != null ? !company.equals(userData.company) : userData.company != null) return false;
     if (address != null ? !address.equals(userData.address) : userData.address != null) return false;
     if (home_phone != null ? !home_phone.equals(userData.home_phone) : userData.home_phone != null) return false;
     if (cell_phone != null ? !cell_phone.equals(userData.cell_phone) : userData.cell_phone != null) return false;
     if (work_phone != null ? !work_phone.equals(userData.work_phone) : userData.work_phone != null) return false;
     if (email != null ? !email.equals(userData.email) : userData.email != null) return false;
     if (email2 != null ? !email2.equals(userData.email2) : userData.email2 != null) return false;
-    if (email3 != null ? !email3.equals(userData.email3) : userData.email3 != null) return false;
-    return group != null ? group.equals(userData.group) : userData.group == null;
+    return email3 != null ? email3.equals(userData.email3) : userData.email3 == null;
   }
 
   @Override
@@ -281,6 +281,7 @@ public class UserData {
     result = 31 * result + (middle_name != null ? middle_name.hashCode() : 0);
     result = 31 * result + (family_name != null ? family_name.hashCode() : 0);
     result = 31 * result + (nickname != null ? nickname.hashCode() : 0);
+    result = 31 * result + (company != null ? company.hashCode() : 0);
     result = 31 * result + (address != null ? address.hashCode() : 0);
     result = 31 * result + (home_phone != null ? home_phone.hashCode() : 0);
     result = 31 * result + (cell_phone != null ? cell_phone.hashCode() : 0);
@@ -288,7 +289,6 @@ public class UserData {
     result = 31 * result + (email != null ? email.hashCode() : 0);
     result = 31 * result + (email2 != null ? email2.hashCode() : 0);
     result = 31 * result + (email3 != null ? email3.hashCode() : 0);
-    result = 31 * result + (group != null ? group.hashCode() : 0);
     return result;
   }
 }

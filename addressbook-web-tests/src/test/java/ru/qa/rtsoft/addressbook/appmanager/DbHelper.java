@@ -36,7 +36,6 @@ public class DbHelper {
     session.close();
     for ( GroupData group : result ) {
       group.withGroupheader(group.getGroupheader().replaceAll("\r\n", "\n")).withGroupfooter(group.getGroupfooter().replaceAll("\r\n", "\n"));
-      System.out.println(group);
     }
     return new Groups(result);
   }

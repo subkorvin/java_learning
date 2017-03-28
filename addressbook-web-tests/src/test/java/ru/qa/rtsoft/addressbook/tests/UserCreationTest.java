@@ -60,6 +60,7 @@ public class UserCreationTest extends TestBase {
   @BeforeMethod
   public void ensurePreconditions() {
     if (app.db().groups().size() == 0) { // проверяем наличие хотя бы одной группы, если нет - создаем группу
+      app.goTo().groupPage();
       app.group().create(new GroupData().withGroupname("Test1").withGroupheader("Test2").withGroupfooter("Test3"));
     }
   }

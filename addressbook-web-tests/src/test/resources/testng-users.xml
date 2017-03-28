@@ -4,6 +4,8 @@
     <test name="Users">
         <classes>
             <class name="ru.qa.rtsoft.addressbook.tests.UserCreationTest"/>
+            <class name="ru.qa.rtsoft.addressbook.tests.UserModificationTests"/>
+            <class name="ru.qa.rtsoft.addressbook.tests.UserDeletingTests"/>
         </classes>
     </test>
 </suite>
