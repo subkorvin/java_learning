@@ -66,7 +66,7 @@ public class UserAdditionalInfoTests extends TestBase {
     app.goTo().toHomePage();
     UserData user = app.user().set().iterator().next();
     UserData userInfoFromEditForm = app.user().infofromEditForm(user);
-    assertThat(cleanedDetais(details), equalToObject(mergeAll(userInfoFromEditForm)));
+    assertThat(cleanedDetails(details), equalToObject(mergeAll(userInfoFromEditForm)));
   }
 
   private String mergeNames(UserData user) {
@@ -110,11 +110,11 @@ public class UserAdditionalInfoTests extends TestBase {
   private String mergeAll(UserData user) {
     return Arrays.asList(mergeFirstBlock(user), mergePhonesWithPrefix(user), mergeEmails(user))
             .stream()
-            .map(UserAdditionalInfoTests::cleanedDetais)
+            .map(UserAdditionalInfoTests::cleanedDetails)
             .collect(Collectors.joining("\n\n"));
   }
 
-  public static String cleanedDetais(String details) {
+  public static String cleanedDetails(String details) {
     return details
             .replaceAll("Member of: Test1", "")
             .replaceAll("\n\n\n", "")

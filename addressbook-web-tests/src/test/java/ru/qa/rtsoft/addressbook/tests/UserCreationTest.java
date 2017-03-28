@@ -7,6 +7,7 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import ru.qa.rtsoft.addressbook.model.GroupData;
+import ru.qa.rtsoft.addressbook.model.Groups;
 import ru.qa.rtsoft.addressbook.model.UserData;
 import ru.qa.rtsoft.addressbook.model.Users;
 
@@ -42,7 +43,7 @@ public class UserCreationTest extends TestBase {
 
   @DataProvider
   public Iterator<Object[]> validUsersFromJson() throws IOException {
-    try (BufferedReader reader = new BufferedReader(new FileReader(new File("src/test/resources/users.json")))) {
+    try (BufferedReader reader = new BufferedReader(new FileReader(new File("src/test/resources/users_1.json")))) {
       String json = "";
       String line = reader.readLine();
       while (line != null) {
@@ -67,10 +68,13 @@ public class UserCreationTest extends TestBase {
 
   @Test(dataProvider = "validUsersFromJson")
   public void testUserCreation(UserData user) {
+    Groups groups = app.db().groups();
+    GroupData selectedGroup = groups.iterator().next();
     Users before = app.db().users();
-    app.user().create(user);
+    app.user().create(user.withGroup(selectedGroup.getGroupname()));
     assertThat(app.user().count(), equalTo(before.size() + 1)); //сравнение размеров списков до и после удаления
     Users after = app.db().users();
     assertThat(after, equalTo(before.withAdded(user.withId(after.stream().mapToInt((u) -> u.getId()).max().getAsInt()))));
+    verifyUserListInUI();
   }
 }

@@ -26,6 +26,10 @@ task testGroups(type: Test) {
     if (project.hasProperty('target')) {
         systemProperty 'target', "${target}"
     }
+
+    if (project.hasProperty('vrifyUI')) {
+        systemProperty 'vrifyUI', "${vrifyUI}"
+    }
 }
 
 task testUsers(type: Test) {
@@ -37,5 +41,9 @@ task testUsers(type: Test) {
     }
     if (project.hasProperty('target')) {
         systemProperty 'target', "${target}"
+    }
+
+    if (project.hasProperty('vrifyUI')) {
+        systemProperty 'vrifyUI', "${vrifyUI}"
     }
 }
