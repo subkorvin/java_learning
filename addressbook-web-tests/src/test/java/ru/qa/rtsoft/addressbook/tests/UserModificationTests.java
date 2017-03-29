@@ -38,7 +38,6 @@ public class UserModificationTests extends TestBase {
     if (app.db().users().size() != 0) {
       Users before = app.db().users();
       UserData modifiedUser = before.iterator().next();
-      File photo = new File("src/test/resources/35_45.jpg");
       UserData user = new UserData()
               .withId(modifiedUser.getId())
               .withFirst_name("Petya")
@@ -53,7 +52,7 @@ public class UserModificationTests extends TestBase {
               .withEmail("p_ivanov@microsoft.com")
               .withEmail2("")
               .withEmail3("")
-              .withPhoto(photo);
+              .withPhoto(new File("src/test/resources/35_45.jpg"));
       app.user().modify(user);
       assertEquals(app.user().count(), before.size()); //сравнение размеров списков до и после удаления
       Users after = app.db().users();
@@ -64,7 +63,6 @@ public class UserModificationTests extends TestBase {
         * пользователя нет,
         * создаем пользователя и модифицируем его
         */
-      File photo = new File("src/test/resources/11698799_crop.jpg");
       Groups groups = app.db().groups();
       GroupData selectedGroup = groups.iterator().next();
       app.user().create(new UserData()
@@ -78,8 +76,8 @@ public class UserModificationTests extends TestBase {
               .withCell_phone("+7 916 1234567")
               .withWork_phone("+7 495 1234567")
               .withEmail("vasya@pupkin.ru")
-//              .withGroup(selectedGroup.getGroupname())
-              .withPhoto(photo));
+              .inGroup(selectedGroup)
+              .withPhoto(new File("src/test/resources/11698799_crop.jpg")));
       Users before = app.db().users();
       UserData modifiedUser = before.iterator().next();
       UserData user = new UserData()
@@ -96,7 +94,7 @@ public class UserModificationTests extends TestBase {
               .withEmail("p_ivanov@microsoft.com")
               .withEmail2("")
               .withEmail3("")
-              .withPhoto(photo);
+              .withPhoto(new File("src/test/resources/11698799_crop.jpg"));
       app.user().modify(user);
       assertEquals(app.user().count(), before.size()); //сравнение размеров списков до и после удаления
       Users after = app.db().users();

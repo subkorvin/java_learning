@@ -81,8 +81,6 @@ public class TestBase {
                       .withAllPhones(u.getHome_phone() + u.getCell_phone() + u.getWork_phone())
                       .withAllEmails(u.getEmail() + u.getEmail2() + u.getEmail3()))
               .collect(Collectors.toSet())));
-      System.out.println("DB\n" + dbUsers + "\n");
-      System.out.println("UI\n" + uiUsers + "\n");
     }
   }
 }

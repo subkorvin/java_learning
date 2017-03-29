@@ -5,6 +5,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
+import ru.qa.rtsoft.addressbook.model.GroupData;
 import ru.qa.rtsoft.addressbook.model.UserData;
 import ru.qa.rtsoft.addressbook.model.Users;
 import ru.qa.rtsoft.addressbook.tests.TestBase;
@@ -174,5 +175,15 @@ public class UserHelper extends HelperBase {
 
   public int count() {
     return wd.findElements(By.name("selected[]")).size();
+  }
+
+  public void addToGroup(UserData user, GroupData group) {
+    selectContact(user.getId());
+    wd.findElement(By.xpath("//select[@name='to_group']/option[@value='" + group.getId() +"']")).click();
+  }
+
+  private void selectContact(int id) {
+    wd.findElement(By.cssSelector("input[value='" + id + "']")).click();
+
   }
 }

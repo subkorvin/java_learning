@@ -40,7 +40,6 @@ public class UserDeletingTests extends TestBase {
     } else { // создаем пользователя и удаляем его же
       Groups groups = app.db().groups();
       GroupData selectedGroup = groups.iterator().next();
-      File photo = new File("src/test/resources/11698799_crop.jpg");
       app.user().create(new UserData()
               .withFirst_name("Vasya")
               .withMiddle_name("Yu")
@@ -52,8 +51,8 @@ public class UserDeletingTests extends TestBase {
               .withCell_phone("+7 916 1234567")
               .withWork_phone("+7 495 1234567")
               .withEmail("vasya@pupkin.ru")
-//              .withGroup(selectedGroup.getGroupname())
-              .withPhoto(photo));
+              .inGroup(selectedGroup)
+              .withPhoto(new File("src/test/resources/11698799_crop.jpg")));
       Users before = app.db().users();
       UserData deletedUser = before.iterator().next();
       app.user().delete(deletedUser);
