@@ -38,12 +38,52 @@ public class AddUsersToGroupsTests extends TestBase {
 
   @Test
   public void testAddingUserToGroup() {
-    Groups groups = app.db().groups();
-    Users before = app.db().users();
-    UserData user = before.iterator().next();
-    GroupData group = groups.iterator().next();
-    app.user().addToGroup(before.iterator().next(), groups.iterator().next());
 
+    Groups groups = app.db().groups();
+    Users users = app.db().users();
+    UserData selectedUser = users.iterator().next();
+
+
+
+    boolean all = true;
+//
+//    GroupData g = groups.iterator().next();
+//    while (g != null)
+//    {
+//      ///
+//      g = groups.iterator().next();
+//    }
+//
+//    while ((g = groups.iterator().next()) != null)
+//    {
+//      if(g.getGroupname() == "")
+//        break;
+//
+//    }
+//    if (g != null)
+//    {
+//      g
+//    }
+
+    for (GroupData selectedGroup : groups) {
+      boolean found = false;
+      for (GroupData userGroup : selectedUser.getGroups()) {
+        if (userGroup.getId() == selectedGroup.getId()) {
+          found = true;
+          break;
+        }
+      }
+      if (!found)
+      {
+        all = false;
+        app.user().addToGroup(selectedUser, selectedGroup);
+      }
+    }
+
+    if (all)
+    {
+//create group
+    }
   }
 
 }

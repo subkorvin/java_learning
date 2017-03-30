@@ -43,7 +43,7 @@ public class UserCreationTest extends TestBase {
 
   @DataProvider
   public Iterator<Object[]> validUsersFromJson() throws IOException {
-    try (BufferedReader reader = new BufferedReader(new FileReader(new File("src/test/resources/users_3.json")))) {
+    try (BufferedReader reader = new BufferedReader(new FileReader(new File("src/test/resources/users_1.json")))) {
       String json = "";
       String line = reader.readLine();
       while (line != null) {

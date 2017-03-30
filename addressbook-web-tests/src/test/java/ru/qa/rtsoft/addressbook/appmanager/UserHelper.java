@@ -178,12 +178,8 @@ public class UserHelper extends HelperBase {
   }
 
   public void addToGroup(UserData user, GroupData group) {
-    selectContact(user.getId());
+    wd.findElement(By.cssSelector("input[value='" + user.getId() + "']")).click();
     wd.findElement(By.xpath("//select[@name='to_group']/option[@value='" + group.getId() +"']")).click();
-  }
-
-  private void selectContact(int id) {
-    wd.findElement(By.cssSelector("input[value='" + id + "']")).click();
-
+    wd.findElement(By.cssSelector("input[value='Add to']")).click();
   }
 }
