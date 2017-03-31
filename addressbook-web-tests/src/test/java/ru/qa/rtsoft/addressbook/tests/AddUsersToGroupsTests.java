@@ -1,5 +1,7 @@
 package ru.qa.rtsoft.addressbook.tests;
 
+import org.hamcrest.CoreMatchers;
+import org.hamcrest.MatcherAssert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import ru.qa.rtsoft.addressbook.model.GroupData;
@@ -8,6 +10,9 @@ import ru.qa.rtsoft.addressbook.model.UserData;
 import ru.qa.rtsoft.addressbook.model.Users;
 
 import java.io.File;
+
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.MatcherAssert.assertThat;
 
 /**
  * Created by korvin on 29.03.2017.
@@ -39,51 +44,52 @@ public class AddUsersToGroupsTests extends TestBase {
   @Test
   public void testAddingUserToGroup() {
 
-    Groups groups = app.db().groups();
+    Groups oldGroupsList = app.db().groups();
     Users users = app.db().users();
     UserData selectedUser = users.iterator().next();
-
-
-
-    boolean all = true;
-//
-//    GroupData g = groups.iterator().next();
-//    while (g != null)
-//    {
-//      ///
-//      g = groups.iterator().next();
-//    }
-//
-//    while ((g = groups.iterator().next()) != null)
-//    {
-//      if(g.getGroupname() == "")
-//        break;
-//
-//    }
-//    if (g != null)
-//    {
-//      g
-//    }
-
-    for (GroupData selectedGroup : groups) {
-      boolean found = false;
-      for (GroupData userGroup : selectedUser.getGroups()) {
-        if (userGroup.getId() == selectedGroup.getId()) {
-          found = true;
+    Groups userGroupsBefore = selectedUser.getGroups();
+    if (selectedUser.getGroups() == null) {
+      app.user().addToGroup(selectedUser, oldGroupsList.iterator().next());
+    } else {
+      boolean all = true;
+      for (GroupData selectedGroup : oldGroupsList) {                  //пробегаем по всем существующим группам
+        boolean found = false;
+        for (GroupData userGroup : selectedUser.getGroups()) {  // пробегаем по всем группам, к которым принадлежит пользователь
+          if (userGroup.equals(selectedGroup)) {                // сравниваем группы
+            found = true;                                       // если совпали выходим из внутреннего цикла
+            break;
+          }
+        }
+        if (!found) {                                           // если не совпали - присваиваем пользователя в группу, после чего выходим из внешнего цикла
+          all = false;
+          app.user().addToGroup(selectedUser, selectedGroup);
+          Groups userGroupsAfter = selectedUser.getGroups();
+          System.out.println("userGroupsAfter\n" + userGroupsAfter);
+          System.out.println("userGroupsBefore\n" + userGroupsBefore);
+          assertThat(userGroupsAfter.remove(selectedGroup), equalTo(userGroupsBefore));
           break;
         }
       }
-      if (!found)
-      {
-        all = false;
-        app.user().addToGroup(selectedUser, selectedGroup);
+      if (all) {                                                // пробежали оба цикла, пользователь во всех группах
+        app.goTo().groupPage();
+        app.group().create(new GroupData()                      // создаем новую группу
+                .withGroupname("Test_new")
+                .withGroupheader("Test_new")
+                .withGroupfooter("Test_new"));
+        app.goTo().toHomePage();
+        Groups newGroupsList = app.db().groups();                                                                                       // берем новый список групп из базы
+        System.out.println("newGroupsList\n" + newGroupsList);
+        for (GroupData newGroup : newGroupsList) {                                                                                      // пробегаем новый список и находим группу с наибольшим ID
+          if (newGroup.getId() == newGroupsList.stream().mapToInt((g) -> g.getId()).max().getAsInt()) {
+            System.out.println("newGroup\n" + newGroup);
+            app.user().addToGroup(selectedUser, newGroup);                                                                              // присваиваем пользователя в новую группу
+            Groups userGroupsAfter = selectedUser.getGroups();
+            System.out.println("userGroupsAfter\n" + userGroupsAfter);
+            System.out.println("userGroupsBefore 1\n" + userGroupsBefore);
+            assertThat(userGroupsAfter, equalTo(userGroupsBefore));
+          }
+        }
       }
     }
-
-    if (all)
-    {
-//create group
-    }
   }
-
 }
