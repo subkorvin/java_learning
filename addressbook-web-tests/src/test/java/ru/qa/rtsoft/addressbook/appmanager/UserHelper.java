@@ -182,4 +182,12 @@ public class UserHelper extends HelperBase {
     wd.findElement(By.xpath("//select[@name='to_group']/option[@value='" + group.getId() +"']")).click();
     wd.findElement(By.cssSelector("input[value='Add to']")).click();
   }
+
+  public void removeFromGroup(UserData user, GroupData group) {
+    wd.findElement(By.xpath("//select[@name='group']/option[@value='" + group.getId() +"']")).click();
+    wd.findElement(By.cssSelector("input[value='" + user.getId() + "']")).click();
+    wd.findElement(By.cssSelector("input[name='remove']")).click();
+    TestBase.getApp().goTo().toHomePage();
+    wd.findElement(By.xpath("//select[@name='group']/option[@value='']")).click();
+  }
 }

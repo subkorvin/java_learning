@@ -1,7 +1,5 @@
 package ru.qa.rtsoft.addressbook.tests;
 
-import org.hamcrest.CoreMatchers;
-import org.hamcrest.MatcherAssert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import ru.qa.rtsoft.addressbook.model.GroupData;
@@ -45,14 +43,15 @@ public class AddUsersToGroupsTests extends TestBase {
   public void testAddingUserToGroup() {
 
     Groups oldGroupsList = app.db().groups();
-    Users users = app.db().users();
-    UserData selectedUser = users.iterator().next();
+    Users usersBefore = app.db().users();
+    UserData selectedUser = usersBefore.iterator().next();
     Groups userGroupsBefore = selectedUser.getGroups();
+    int userId = selectedUser.getId();
     if (selectedUser.getGroups() == null) {
       app.user().addToGroup(selectedUser, oldGroupsList.iterator().next());
     } else {
       boolean all = true;
-      for (GroupData selectedGroup : oldGroupsList) {                  //пробегаем по всем существующим группам
+      for (GroupData selectedGroup : oldGroupsList) {           //пробегаем по всем существующим группам
         boolean found = false;
         for (GroupData userGroup : selectedUser.getGroups()) {  // пробегаем по всем группам, к которым принадлежит пользователь
           if (userGroup.equals(selectedGroup)) {                // сравниваем группы
@@ -63,10 +62,13 @@ public class AddUsersToGroupsTests extends TestBase {
         if (!found) {                                           // если не совпали - присваиваем пользователя в группу, после чего выходим из внешнего цикла
           all = false;
           app.user().addToGroup(selectedUser, selectedGroup);
-          Groups userGroupsAfter = selectedUser.getGroups();
-          System.out.println("userGroupsAfter\n" + userGroupsAfter);
-          System.out.println("userGroupsBefore\n" + userGroupsBefore);
-          assertThat(userGroupsAfter.remove(selectedGroup), equalTo(userGroupsBefore));
+          Users usersAfter = app.db().users();
+          for (UserData user : usersAfter) {
+            if (user.getId() == userId) {
+              selectedUser = user;
+            }
+          }
+          assertThat(selectedUser.getGroups().without(selectedGroup), equalTo(userGroupsBefore));
           break;
         }
       }
@@ -78,15 +80,16 @@ public class AddUsersToGroupsTests extends TestBase {
                 .withGroupfooter("Test_new"));
         app.goTo().toHomePage();
         Groups newGroupsList = app.db().groups();                                                                                       // берем новый список групп из базы
-        System.out.println("newGroupsList\n" + newGroupsList);
         for (GroupData newGroup : newGroupsList) {                                                                                      // пробегаем новый список и находим группу с наибольшим ID
           if (newGroup.getId() == newGroupsList.stream().mapToInt((g) -> g.getId()).max().getAsInt()) {
-            System.out.println("newGroup\n" + newGroup);
             app.user().addToGroup(selectedUser, newGroup);                                                                              // присваиваем пользователя в новую группу
-            Groups userGroupsAfter = selectedUser.getGroups();
-            System.out.println("userGroupsAfter\n" + userGroupsAfter);
-            System.out.println("userGroupsBefore 1\n" + userGroupsBefore);
-            assertThat(userGroupsAfter, equalTo(userGroupsBefore));
+            Users usersAfter = app.db().users();
+            for (UserData user : usersAfter) {
+              if (user.getId() == userId) {
+                selectedUser = user;
+              }
+            }
+            assertThat(selectedUser.getGroups().without(newGroup), equalTo(userGroupsBefore));
           }
         }
       }
