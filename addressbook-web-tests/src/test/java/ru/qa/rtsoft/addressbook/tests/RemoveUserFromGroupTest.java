@@ -62,13 +62,4 @@ public class RemoveUserFromGroupTest extends TestBase {
     assertThat(selectedUser.getGroups().withAdded(selectedGroup), equalTo(userGroupsBefore));
   }
 
-  private UserData refreshUserData(UserData selectedUser, int userId) {
-    Users usersAfter = app.db().users();
-    for (UserData user : usersAfter) {
-      if (user.getId() == userId) {
-        selectedUser = user;
-      }
-    }
-    return selectedUser;
-  }
 }

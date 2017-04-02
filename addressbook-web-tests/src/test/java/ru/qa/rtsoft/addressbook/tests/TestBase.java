@@ -83,4 +83,14 @@ public class TestBase {
               .collect(Collectors.toSet())));
     }
   }
+
+  protected UserData refreshUserData(UserData selectedUser, int userId) {
+    Users usersAfter = app.db().users();
+    for (UserData user : usersAfter) {
+      if (user.getId() == userId) {
+        selectedUser = user;
+      }
+    }
+    return selectedUser;
+  }
 }

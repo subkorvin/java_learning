@@ -62,12 +62,7 @@ public class AddUsersToGroupsTests extends TestBase {
         if (!found) {                                           // если не совпали - присваиваем пользователя в группу, после чего выходим из внешнего цикла
           all = false;
           app.user().addToGroup(selectedUser, selectedGroup);
-          Users usersAfter = app.db().users();
-          for (UserData user : usersAfter) {
-            if (user.getId() == userId) {
-              selectedUser = user;
-            }
-          }
+          selectedUser = refreshUserData(selectedUser, userId);
           assertThat(selectedUser.getGroups().without(selectedGroup), equalTo(userGroupsBefore));
           break;
         }
@@ -83,12 +78,7 @@ public class AddUsersToGroupsTests extends TestBase {
         for (GroupData newGroup : newGroupsList) {                                                                                      // пробегаем новый список и находим группу с наибольшим ID
           if (newGroup.getId() == newGroupsList.stream().mapToInt((g) -> g.getId()).max().getAsInt()) {
             app.user().addToGroup(selectedUser, newGroup);                                                                              // присваиваем пользователя в новую группу
-            Users usersAfter = app.db().users();
-            for (UserData user : usersAfter) {
-              if (user.getId() == userId) {
-                selectedUser = user;
-              }
-            }
+            selectedUser = refreshUserData(selectedUser, userId);
             assertThat(selectedUser.getGroups().without(newGroup), equalTo(userGroupsBefore));
           }
         }
