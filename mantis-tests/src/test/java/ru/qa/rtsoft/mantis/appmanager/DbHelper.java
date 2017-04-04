@@ -1,14 +1,12 @@
-package ru.qa.rtsoft.addressbook.appmanager;
+package ru.qa.rtsoft.mantis.appmanager;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.MetadataSources;
 import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
-import ru.qa.rtsoft.addressbook.model.GroupData;
-import ru.qa.rtsoft.addressbook.model.Groups;
-import ru.qa.rtsoft.addressbook.model.UserData;
-import ru.qa.rtsoft.addressbook.model.Users;
+import ru.qa.rtsoft.mantis.model.UserData;
+import ru.qa.rtsoft.mantis.model.Users;
 
 import java.util.List;
 
@@ -18,25 +16,15 @@ import java.util.List;
 public class DbHelper {
 
   private final SessionFactory sessionFactory;
+  private final ApplicationManager app;
 
-  public DbHelper() {
+  public DbHelper(ApplicationManager app) {
+    this.app = app;
     // A SessionFactory is set up once for an application!
     final StandardServiceRegistry registry = new StandardServiceRegistryBuilder()
             .configure() // configures settings from hibernate.cfg.xml
             .build();
       sessionFactory = new MetadataSources(registry).buildMetadata().buildSessionFactory();
-  }
-
-  public Groups groups () {
-    Session session = sessionFactory.openSession();
-    session.beginTransaction();
-    List<GroupData> result = session.createQuery( "from GroupData").list();
-    session.getTransaction().commit();
-    session.close();
-    for ( GroupData group : result ) {
-      group.withGroupheader(group.getGroupheader().replaceAll("\r\n", "\n")).withGroupfooter(group.getGroupfooter().replaceAll("\r\n", "\n"));
-    }
-    return new Groups(result);
   }
 
 
