@@ -26,6 +26,9 @@ public class ApplicationManager {
   private FtpHelper ftp;
   private MailHelper mailHelper;
   private DbHelper dbHelper;
+  private SessionHelper sessionHelper;
+  private NavigationHelper navigationHelper;
+
 
   public ApplicationManager(String browser) {
     this.browser = browser;
@@ -59,6 +62,20 @@ public class ApplicationManager {
     return registrationHelper;
   }
 
+  public SessionHelper session() {
+    if (sessionHelper == null) {
+      sessionHelper = new SessionHelper(this);
+    }
+    return sessionHelper;
+  }
+
+  public NavigationHelper goTo() {
+    if (navigationHelper == null) {
+      navigationHelper = new NavigationHelper(this);
+    }
+    return navigationHelper;
+  }
+
   public DbHelper db() {
     if (dbHelper == null) {
       dbHelper = new DbHelper(this);
@@ -86,6 +103,7 @@ public class ApplicationManager {
         wd = new FirefoxDriver();
       } else if (Objects.equals(browser, BrowserType.CHROME)) {
         wd = new ChromeDriver();
+        wd.manage().window().maximize();
       } else if (Objects.equals(browser, BrowserType.IE)) {
         wd = new InternetExplorerDriver();
       }

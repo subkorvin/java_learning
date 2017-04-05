@@ -3,6 +3,16 @@ package ru.qa.rtsoft.mantis.tests;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
+import ru.lanwen.verbalregex.VerbalExpression;
+import ru.qa.rtsoft.mantis.model.MailMessage;
+import ru.qa.rtsoft.mantis.model.UserData;
+import ru.qa.rtsoft.mantis.model.Users;
+
+import javax.mail.MessagingException;
+import java.io.IOException;
+import java.util.List;
+
+import static org.testng.Assert.assertTrue;
 
 /**
  * Created by korvin on 04.04.2017.
@@ -15,9 +25,33 @@ public class ResetUserPasswordTests extends TestBase {
   }
 
   @Test
-  public void testResetingPassword() {
-
+  public void testResetingPassword() throws IOException, MessagingException {
+    Users users = app.db().users();
+    String username = null;
+    String email = null;
+    for (UserData user : users) {
+      if (user.getId() == users.stream().mapToInt((g) -> g.getId()).max().getAsInt()) {
+        username = user.getUsername();
+        email = user.getEmail();
+      }
+    }
+    System.out.println(email);
+    app.session().loginAsAdmin();
+    app.goTo().manageUsers(username);
+    List<MailMessage> mailMessages = app.mail().waitForMail(1, 10000);
+    String confirmationLink = findConfirmationLink(mailMessages, email);
+    System.out.println(confirmationLink);
+    String password = "password";
+    app.session().changePassword(confirmationLink, password);
+    assertTrue( app.newSession().login(username, password));
   }
+
+  private String findConfirmationLink(List<MailMessage> mailMessages, String email) {
+    MailMessage mailMessage = mailMessages.stream().filter((m) -> m.to.equals(email)).findAny().get();
+    VerbalExpression regex = VerbalExpression.regex().find("http://").nonSpace().oneOrMore().build();
+    return regex.getText(mailMessage.text);
+  }
+
 
   @AfterMethod(alwaysRun = true)
   public void stopMailServer() {
