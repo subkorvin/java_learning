@@ -101,6 +101,7 @@ public class ApplicationManager {
     if (wd == null) {
       if (Objects.equals(browser, BrowserType.FIREFOX)) {
         wd = new FirefoxDriver();
+        wd.manage().window().maximize();
       } else if (Objects.equals(browser, BrowserType.CHROME)) {
         wd = new ChromeDriver();
         wd.manage().window().maximize();

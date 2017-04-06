@@ -29,18 +29,22 @@ public class ResetUserPasswordTests extends TestBase {
     Users users = app.db().users();
     String username = null;
     String email = null;
+    int id = 0;
     for (UserData user : users) {
       if (user.getId() == users.stream().mapToInt((g) -> g.getId()).max().getAsInt()) {
         username = user.getUsername();
         email = user.getEmail();
+        id = user.getId();
       }
     }
-    System.out.println(email);
+    if (id == 1){
+      System.out.println("No users found, please register at least one user");
+      return;
+    }
     app.session().loginAsAdmin();
     app.goTo().manageUsers(username);
     List<MailMessage> mailMessages = app.mail().waitForMail(1, 10000);
     String confirmationLink = findConfirmationLink(mailMessages, email);
-    System.out.println(confirmationLink);
     String password = "password";
     app.session().changePassword(confirmationLink, password);
     assertTrue( app.newSession().login(username, password));
