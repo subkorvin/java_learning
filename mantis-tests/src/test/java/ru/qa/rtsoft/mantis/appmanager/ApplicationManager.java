@@ -28,6 +28,7 @@ public class ApplicationManager {
   private DbHelper dbHelper;
   private SessionHelper sessionHelper;
   private NavigationHelper navigationHelper;
+  private JamesHelper jamesHelper;
 
 
   public ApplicationManager(String browser) {
@@ -95,6 +96,13 @@ public class ApplicationManager {
       mailHelper = new MailHelper(this);
     }
     return mailHelper;
+  }
+
+  public JamesHelper james() {
+    if (jamesHelper == null) {
+      jamesHelper = new JamesHelper(this);
+    }
+    return jamesHelper;
   }
 
   public WebDriver getDriver() {
