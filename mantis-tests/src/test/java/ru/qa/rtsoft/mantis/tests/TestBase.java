@@ -1,12 +1,21 @@
 package ru.qa.rtsoft.mantis.tests;
 
+import biz.futureware.mantis.rpc.soap.client.IssueData;
+import biz.futureware.mantis.rpc.soap.client.MantisConnectPortType;
 import org.openqa.selenium.remote.BrowserType;
 import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeSuite;
 import ru.qa.rtsoft.mantis.appmanager.ApplicationManager;
+import ru.qa.rtsoft.mantis.model.Project;
 
+import javax.xml.rpc.ServiceException;
 import java.io.File;
 import java.io.IOException;
+import java.math.BigInteger;
+import java.net.MalformedURLException;
+import java.rmi.RemoteException;
+import java.util.Arrays;
+import java.util.Set;
 
 /**
  * Created by korvin on 20.02.2017.
@@ -34,13 +43,13 @@ public class TestBase {
     return app;
   }
 
-//  protected UserData refreshUserData(UserData selectedUser, int userId) {
-//    Users usersAfter = app.db().users();
-//    for (UserData user : usersAfter) {
-//      if (user.getId() == userId) {
-//        selectedUser = user;
-//      }
-//    }
-//    return selectedUser;
-//  }
+  public boolean isIssueOpen(int issueId) throws MalformedURLException, ServiceException, RemoteException {
+    MantisConnectPortType mc = app.soap().getMantisConnect();
+    IssueData issue = mc.mc_issue_get("administrator", "root", app.soap().setIssueId(issueId));
+    System.out.println(issue);
+//    Set<Project> projects = app.soap().getProjects();
+//    Project project = projects.stream().filter((p) -> p.getName().equals("test")).findAny().get();
+//    System.out.println(project);
+    return true;
+  }
 }
