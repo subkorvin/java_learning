@@ -32,11 +32,6 @@ public class SoapHelper {
             .withName(p.getName())).collect(Collectors.toSet());
   }
 
-  public BigInteger setIssueId(int issueId){
-    return BigInteger.valueOf(issueId);
-  }
-
-
 
   public MantisConnectPortType getMantisConnect() throws ServiceException, MalformedURLException {
     return new MantisConnectLocator()
