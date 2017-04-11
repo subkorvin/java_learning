@@ -41,7 +41,7 @@ public class RestAssuredTests extends TestBase{
 
   @Test
   public void testGetProjects() throws IOException {
-    issueId = 2;
+    issueId = 1;
     skipTest();
     Set<Projects> projects = app.rest().getProjects();
     for (Projects project : projects) {

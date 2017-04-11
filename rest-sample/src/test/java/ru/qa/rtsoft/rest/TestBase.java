@@ -4,11 +4,7 @@ import appmanager.ApplicationManager;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
 import com.jayway.restassured.RestAssured;
-import org.openqa.selenium.remote.BrowserType;
 import org.testng.SkipException;
-import org.testng.annotations.AfterSuite;
-import org.testng.annotations.BeforeClass;
-import org.testng.annotations.BeforeSuite;
 
 import java.io.IOException;
 
@@ -19,24 +15,6 @@ public class TestBase {
 
 
   protected static ApplicationManager app;
-
-  @BeforeSuite
-  public void setUp() throws Exception {
-    app = new ApplicationManager(System.getProperty("browser", BrowserType.CHROME));
-    app.init();
-    //app.ftp().upload(new File("src/test/resources/config_inc.php"), "config_inc.php", "config_inc.php.bak");
-  }
-
-  @AfterSuite(alwaysRun = true)
-  public void tearDown() throws IOException {
-    //app.ftp().restore("config_inc.php.bak", "config_inc.php");
-    app.stop();
-  }
-
-  @BeforeClass
-  public void init() {
-    RestAssured.authentication = RestAssured.basic("LSGjeU4yP1X493ud1hNniA==", "");
-  }
 
   public static ApplicationManager getApp() {
     return app;
@@ -58,7 +36,6 @@ public class TestBase {
 //    }
   return true;
   }
-
 
 
   public void skipIfNotFixed(int issueId) throws IOException {

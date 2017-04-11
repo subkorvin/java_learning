@@ -7,7 +7,6 @@ import com.google.gson.reflect.TypeToken;
 import com.jayway.restassured.RestAssured;
 import model.Issue;
 import model.Projects;
-import org.testng.annotations.BeforeClass;
 
 import java.io.IOException;
 import java.util.Set;
@@ -24,10 +23,6 @@ public class RestHelper {
     this.app = app;
   }
 
-  @BeforeClass
-  public void init() {
-    RestAssured.authentication = RestAssured.basic("LSGjeU4yP1X493ud1hNniA==", "");
-  }
 
   public Set<Projects> getProjects() {
     String json = RestAssured.get("http://demo.bugify.com/api/projects.json").asString();
