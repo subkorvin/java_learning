@@ -1,9 +1,7 @@
 package ru.qa.rtsoft.rest;
 
-import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
-import com.google.gson.reflect.TypeToken;
 import com.jayway.restassured.RestAssured;
 import model.Issue;
 import model.Projects;
@@ -11,8 +9,6 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
 import java.io.IOException;
-import java.net.MalformedURLException;
-import java.rmi.RemoteException;
 import java.util.Set;
 
 import static org.testng.Assert.assertEquals;
@@ -28,6 +24,7 @@ public class RestAssuredTests extends TestBase{
   public void init() {
     RestAssured.authentication = RestAssured.basic("LSGjeU4yP1X493ud1hNniA==", "");
   }
+
   public int issueId;
 
   @Test
@@ -51,6 +48,15 @@ public class RestAssuredTests extends TestBase{
       System.out.println("Name is " + project.getName());
     }
   }
+
+  @Test
+  public void testGetIssue() {
+    issueId = 2;
+    String json = RestAssured.get("http://demo.bugify.com/api/issues/" + issueId + ".json").asString();
+    JsonElement parsed = new JsonParser().parse(json);
+    System.out.println(parsed);
+  }
+
 
   public int getIssueId(int issueId) {
     return issueId;

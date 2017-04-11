@@ -20,22 +20,29 @@ public class RestHelper {
 
   private ApplicationManager app;
 
-  public RestHelper(ApplicationManager app){
+  public RestHelper(ApplicationManager app) {
     this.app = app;
+  }
+
+  @BeforeClass
+  public void init() {
+    RestAssured.authentication = RestAssured.basic("LSGjeU4yP1X493ud1hNniA==", "");
   }
 
   public Set<Projects> getProjects() {
     String json = RestAssured.get("http://demo.bugify.com/api/projects.json").asString();
     JsonElement parsed = new JsonParser().parse(json);
     JsonElement projects = parsed.getAsJsonObject().get("projects");
-    return new Gson().fromJson(projects, new TypeToken<Set<Projects>>(){}.getType());
+    return new Gson().fromJson(projects, new TypeToken<Set<Projects>>() {
+    }.getType());
   }
 
   public Set<Issue> getIssues() throws IOException {
     String json = RestAssured.get("http://demo.bugify.com/api/issues.json").asString();
     JsonElement parsed = new JsonParser().parse(json);
     JsonElement issues = parsed.getAsJsonObject().get("issues");
-    return new Gson().fromJson(issues, new TypeToken<Set<Issue>>(){}.getType());
+    return new Gson().fromJson(issues, new TypeToken<Set<Issue>>() {
+    }.getType());
   }
 
   public int createIssue(Issue newIssue) throws IOException {
