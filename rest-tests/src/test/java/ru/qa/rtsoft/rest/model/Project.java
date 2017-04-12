@@ -1,9 +1,9 @@
-package model;
+package ru.qa.rtsoft.rest.model;
 
 /**
- * Created by korvin on 10.04.2017.
+ * Created by korvin on 12.04.2017.
  */
-public class Projects {
+public class Project {
 
   private int id;
   private String name;
@@ -21,14 +21,13 @@ public class Projects {
 
   //Setters
 
-  public Projects withName(String name) {
+  public Project withName(String name) {
     this.name = name;
     return this;
   }
 
-  public Projects withId(int id) {
+  public Project withId(int id) {
     this.id = id;
     return this;
   }
-
 }

@@ -1,12 +1,12 @@
-package ru.qa.rtsoft.rest;
+package ru.qa.rtsoft.rest.tests;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
 import com.jayway.restassured.RestAssured;
-import model.Issue;
-import model.Projects;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
+import ru.qa.rtsoft.rest.model.Issue;
+import ru.qa.rtsoft.rest.model.Project;
 
 import java.io.IOException;
 import java.util.Set;
@@ -14,11 +14,9 @@ import java.util.Set;
 import static org.testng.Assert.assertEquals;
 
 /**
- * Created by Korvin on 09.04.2017.
+ * Created by korvin on 12.04.2017.
  */
-public class RestAssuredTests extends TestBase{
-
-
+public class RestAssuredTests extends TestBase {
 
   @BeforeClass
   public void init() {
@@ -29,7 +27,7 @@ public class RestAssuredTests extends TestBase{
 
   @Test
   public void testCreateIssue() throws IOException {
-    issueId = 1;
+    issueId = 5;
     skipTest();
     Set<Issue> oldIssues = app.rest().getIssues();
     Issue newIssue = new Issue().withSubject("Test issue").withDescription("Test description");
@@ -41,17 +39,18 @@ public class RestAssuredTests extends TestBase{
 
   @Test
   public void testGetProjects() throws IOException {
-    issueId = 1;
+    issueId = 8;
     skipTest();
-    Set<Projects> projects = app.rest().getProjects();
-    for (Projects project : projects) {
+    Set<Project> projects = app.rest().getProjects();
+    for (Project project : projects) {
       System.out.println("Name is " + project.getName());
     }
   }
 
   @Test
-  public void testGetIssue() {
-    issueId = 2;
+  public void testGetIssue() throws IOException {
+    issueId = 4;
+    skipTest();
     String json = RestAssured.get("http://demo.bugify.com/api/issues/" + issueId + ".json").asString();
     JsonElement parsed = new JsonParser().parse(json);
     System.out.println(parsed);
