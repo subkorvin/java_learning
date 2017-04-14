@@ -23,6 +23,9 @@ task testGroups(type: Test) {
     if (project.hasProperty('browser')) {
         systemProperty 'browser', "${browser}"
     }
+    if (project.hasProperty('platform')) {
+        systemProperty 'platform', "${platform}"
+    }
     if (project.hasProperty('target')) {
         systemProperty 'target', "${target}"
     }
@@ -42,7 +45,9 @@ task testUsers(type: Test) {
     if (project.hasProperty('target')) {
         systemProperty 'target', "${target}"
     }
-
+    if (project.hasProperty('platform')) {
+        systemProperty 'platform', "${platform}"
+    }
     if (project.hasProperty('vrifyUI')) {
         systemProperty 'vrifyUI', "${vrifyUI}"
     }
