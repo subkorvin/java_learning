@@ -9,18 +9,20 @@ configurations {
 }
 
 dependencies {
-    compile 'org.testng:testng:6.10'
-    compile 'org.seleniumhq.selenium:selenium-java:2.53.1'
-    compile 'org.hamcrest:java-hamcrest:2.0.0.0'
-    compile 'com.beust:jcommander:1.64'
-    compile 'com.thoughtworks.xstream:xstream:1.4.9'
-    compile 'com.google.code.gson:gson:2.8.0'
-    compile 'ch.qos.logback:logback-classic:1.2.2'
-    compile 'mysql:mysql-connector-java:6.0.6'
-    compile 'org.hibernate:hibernate-core:5.2.9.Final'
+    implementation 'org.testng:testng:6.10'
+    implementation 'org.seleniumhq.selenium:selenium-java:2.53.1'
+    implementation 'org.hamcrest:java-hamcrest:2.0.0.0'
+    implementation 'com.beust:jcommander:1.64'
+    implementation 'com.thoughtworks.xstream:xstream:1.4.9'
+    implementation 'com.google.code.gson:gson:2.8.0'
+    implementation 'ch.qos.logback:logback-classic:1.2.2'
+    implementation 'mysql:mysql-connector-java:6.0.6'
+    implementation 'org.hibernate:hibernate-core:5.2.9.Final'
     agent "org.aspectj:aspectjweaver:1.8.0"
-    compile "ru.yandex.qatools.allure:allure-testng-adaptor:1.4.0.RC4"
-    compile 'org.robotframework:robotframework:3.0.2'
+    implementation "ru.yandex.qatools.allure:allure-testng-adaptor:1.4.0.RC4"
+    implementation 'org.robotframework:robotframework:3.0.2'
+    implementation 'info.cukes:cucumber-java:1.2.5'
+    implementation 'info.cukes:cucumber-testng:1.2.5'
 }
 
 
